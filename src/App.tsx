@@ -1,9 +1,10 @@
-function App() {
+import { name } from "./main"
 
+function App() {
   return (
-    <>
-      Hello World!
-    </>
+    <div>
+      Hello World {name}!
+    </div>
   )
 }
 
