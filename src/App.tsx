@@ -1,9 +1,7 @@
-import { name } from "./main"
-
 function App() {
   return (
     <div>
-      Hello World {name}!
+      Hello World!
     </div>
   )
 }
