@@ -1,10 +1,13 @@
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
+
 import App from './App'
-import React from 'react'
+
+export type TWernik = string
+export const name: TWernik = 'Wernik'
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
     <App />
-  </StrictMode>
+  </StrictMode>,
 )

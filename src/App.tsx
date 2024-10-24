@@ -1,10 +1,9 @@
-import React from 'react'
+import { name } from "./main"
 
 function App() {
-
   return (
     <div>
-      Hello World!
+      Hello World {name}!
     </div>
   )
 }
