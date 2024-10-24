@@ -1,26 +1,46 @@
 {
+  "files": [],
   "compilerOptions": {
-    "strict": true,
-    "noImplicitAny": true,
-    "strictNullChecks": true,
-    "strictFunctionTypes": true,
-    "strictBindCallApply": true,
-    "strictPropertyInitialization": true,
-    "noImplicitThis": true,
-    "alwaysStrict": true,
-    "noUnusedLocals": true,
-    "noUnusedParameters": true,
-    "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-    "noPropertyAccessFromIndexSignature": true,
-    "exactOptionalPropertyTypes": true,
-    "noImplicitOverride": true,
-    "useUnknownInCatchVariables": true,
-    "forceConsistentCasingInFileNames": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true
+       // Strict Type-Checking Options
+       "strict": true,
+       "noImplicitAny": true,
+       "strictNullChecks": true,
+       "strictFunctionTypes": true,
+       "strictBindCallApply": true,
+       "strictPropertyInitialization": true,
+       "noImplicitThis": true,
+       "alwaysStrict": true,
+       "useUnknownInCatchVariables": true,
+       "noUnusedLocals": true,
+       "noUnusedParameters": true,
+       "noImplicitReturns": true,
+       "noFallthroughCasesInSwitch": true,
+       "noImplicitOverride": true,
+       "exactOptionalPropertyTypes": true,
+       "noUncheckedIndexedAccess": true,
+       "noPropertyAccessFromIndexSignature": true,
+   
+       // Module Resolution
+       "module": "ESNext",
+       "moduleResolution": "bundler",
+       "moduleDetection": "force",
+       "isolatedModules": true,
+       "allowImportingTsExtensions": true,
+       "esModuleInterop": true,
+   
+       // Emit Configuration
+       "noEmit": true,
+       
+       // Project Configuration
+       "forceConsistentCasingInFileNames": true,
+       "skipLibCheck": true
   },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules"]
+  "references": [
+    {
+      "path": "./tsconfig.app.json"
+    },
+    {
+      "path": "./tsconfig.node.json"
+    }
+  ]
 }
