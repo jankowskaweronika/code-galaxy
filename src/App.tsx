@@ -1,12 +1,9 @@
-import { ButtonMUI } from './components/Button/index'
+import { CourseCard } from './components/CourseCard/index'
 
 function App() {
   return (
     <div>
-      Hello World!
-      <ButtonMUI variant="contained" size="medium" onClick={() => console.log('clicked')}>
-        Kliknij mnie
-      </ButtonMUI>
+      <CourseCard image={''} name={''} price={0} description={''} />
     </div>
   )
 }
