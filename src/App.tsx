@@ -1,9 +1,6 @@
-import React from 'react'
-
 import { ButtonMUI } from './components/Button/index'
 
 function App() {
-
   return (
     <div>
       Hello World!

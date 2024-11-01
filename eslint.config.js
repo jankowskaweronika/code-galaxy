@@ -1,89 +1,161 @@
-import eslint from '@eslint/js'
-import tseslint from '@typescript-eslint/eslint-plugin'
-import tseslintParser from '@typescript-eslint/parser'
+import js from '@eslint/js'
+import tsPlugin from '@typescript-eslint/eslint-plugin'
+import tsParser from '@typescript-eslint/parser'
 import reactPlugin from 'eslint-plugin-react'
 import reactHooksPlugin from 'eslint-plugin-react-hooks'
+import reactRefreshPlugin from 'eslint-plugin-react-refresh'
+import importPlugin from 'eslint-plugin-import'
+import nodePlugin from 'eslint-plugin-node'
+import promisePlugin from 'eslint-plugin-promise'
 import globals from 'globals'
 
-export default [
-  {
-    ignores: ['dist/*', 'node_modules/*']
+const configDefaults = js.configs.recommended
+
+const configBase = {
+  files: ['**/*.{js,jsx,ts,tsx}'],
+  plugins: {
+    import: importPlugin,
+    n: nodePlugin,
+    promise: promisePlugin,
   },
-  {
-    files: ['src/**/*.{ts,tsx}'],
-    languageOptions: {
-      parser: tseslintParser,
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-        project: './tsconfig.json',
-        tsconfigRootDir: '.',
+  rules: {
+    'space-before-function-paren': ['error', 'never'],
+    'comma-dangle': ['error', 'always-multiline'],
+    'no-unused-vars': 'warn',
+    'no-var': 'error',
+    'prefer-const': 'error',
+
+    'n/handle-callback-err': ['error', '^(err|error)$'],
+    'n/no-callback-literal': 'error',
+    'n/no-deprecated-api': 'error',
+    'n/no-exports-assign': 'error',
+    'n/no-new-require': 'error',
+    'n/no-path-concat': 'error',
+    'n/process-exit-as-throw': 'error',
+
+    'import/first': 'error',
+    'import/no-duplicates': 'error',
+    'import/no-named-default': 'error',
+    'import/no-webpack-loader-syntax': 'error',
+
+    'promise/param-names': 'error',
+  },
+}
+
+const sharedTypeScriptRules = {
+  ...tsPlugin.configs['recommended-type-checked'].rules,
+  '@typescript-eslint/explicit-function-return-type': 'off',
+  '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
+  '@typescript-eslint/consistent-type-imports': ['error', {
+    prefer: 'type-imports',
+    disallowTypeAnnotations: true,
+    fixStyle: 'separate-type-imports',
+  }],
+  'no-unused-vars': 'off',
+}
+
+const configTypeScriptApp = {
+  files: ['src/**/*.{ts,tsx}'],
+  languageOptions: {
+    parser: tsParser,
+    parserOptions: {
+      project: './tsconfig.app.json',
+      tsconfigRootDir: import.meta.dirname,
+      ecmaVersion: 'latest',
+      sourceType: 'module',
+      ecmaFeatures: {
+        jsx: true,
       },
-      globals: {
-        ...globals.browser,
-        ...globals.es2021,
-        ...globals.node
-      }
     },
-    plugins: {
-      '@typescript-eslint': tseslint,
-      'react': reactPlugin,
-      'react-hooks': reactHooksPlugin
+  },
+  plugins: {
+    '@typescript-eslint': tsPlugin,
+  },
+  rules: sharedTypeScriptRules,
+}
+
+const configTypeScriptNode = {
+  files: ['vite.config.ts'],
+  languageOptions: {
+    parser: tsParser,
+    parserOptions: {
+      project: './tsconfig.node.json',
+      tsconfigRootDir: import.meta.dirname,
+      ecmaVersion: 'latest',
+      sourceType: 'module',
     },
-    settings: {
-      react: {
-        version: 'detect'
-      }
+  },
+  plugins: {
+    '@typescript-eslint': tsPlugin,
+  },
+  rules: sharedTypeScriptRules,
+}
+
+const configReact = {
+  files: ['**/*.{jsx,tsx}'],
+  plugins: {
+    react: reactPlugin,
+    'react-hooks': reactHooksPlugin,
+    'react-refresh': reactRefreshPlugin,
+  },
+  languageOptions: {
+    globals: {
+      ...globals.browser,
     },
-    rules: {
-      // Base ESLint rules
-      'no-undef': 'off', // TypeScript handles this
-      'no-unused-vars': 'off', // TypeScript handles this
+    parserOptions: {
+      ecmaFeatures: {
+        jsx: true,
+      },
+    },
+  },
+  settings: {
+    react: {
+      version: 'detect',
+    },
+  },
+  rules: {
+    ...reactPlugin.configs.recommended.rules,
+    ...reactHooksPlugin.configs.recommended.rules,
+    'react-refresh/only-export-components': [
+      'warn',
+      { allowConstantExport: true },
+    ],
+    'react/react-in-jsx-scope': 'off',
+    'react/prop-types': 'off',
+  },
+}
 
-      // TypeScript strict rules
-      '@typescript-eslint/no-unused-vars': ['error', {
-        argsIgnorePattern: '^_',
-        varsIgnorePattern: '^_'
-      }],
-      '@typescript-eslint/no-explicit-any': 'error',
-      '@typescript-eslint/explicit-module-boundary-types': 'error',
-      '@typescript-eslint/no-non-null-assertion': 'error',
-      '@typescript-eslint/consistent-type-imports': ['error', {
-        prefer: 'type-imports'
-      }],
-      '@typescript-eslint/no-floating-promises': 'error',
-      '@typescript-eslint/no-misused-promises': 'error',
-      '@typescript-eslint/await-thenable': 'error',
+const configVite = {
+  files: ['vite.config.{js,ts}'],
+  languageOptions: {
+    globals: {
+      ...globals.node,
+    },
+  },
+}
 
-      // React rules
-      'react/prop-types': 'off',
-      'react/react-in-jsx-scope': 'off',
-      'react-hooks/rules-of-hooks': 'error',
-      'react-hooks/exhaustive-deps': 'warn',
+const configTests = {
+  files: ['**/*.test.{js,jsx,ts,tsx}', '**/*.spec.{js,jsx,ts,tsx}'],
+  languageOptions: {
+    globals: {
+      ...globals.jest,
+      ...globals.node,
+    },
+  },
+}
 
-      // Style rules
-      'semi': ['error', 'never'],
-      'quotes': ['error', 'single'],
-      'indent': ['error', 2],
-      'comma-dangle': ['error', 'never'],
-      'space-before-function-paren': ['error', 'always'],
-      'no-multiple-empty-lines': ['error', { max: 1 }],
-      'no-trailing-spaces': 'error',
-      'object-curly-spacing': ['error', 'always'],
-      'arrow-parens': ['error', 'always'],
-      'max-len': ['error', {
-        code: 100,
-        ignoreComments: true,
-        ignoreStrings: true,
-        ignoreTemplateLiterals: true
-      }],
+export default [
+  configDefaults,
 
-      // Additional strict rules
-      'no-console': 'warn',
-      'no-debugger': 'error',
-      'prefer-const': 'error',
-      'no-var': 'error',
-      'eqeqeq': 'error'
-    }
-  }
+  configBase,
+
+  configTypeScriptApp,
+
+  configTypeScriptNode,
+
+  configReact,
+
+  configVite,
+
+  configTests,
 ]
