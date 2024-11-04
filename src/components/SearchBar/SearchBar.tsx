@@ -31,7 +31,13 @@ const SearchBar: React.FC<SearchBarProps> = ({
             elevation={0}
             variant="outlined"
         >
-            <SearchIcon sx={{ p: '10px', color: 'action.active' }} />
+            <SearchIcon
+                sx={{
+                    p: '10px',
+                    color: 'action.active',
+                    fontSize: 35
+                }}
+            />
             <InputBase
                 sx={{ ml: 1, flex: 1 }}
                 placeholder={placeholder}
