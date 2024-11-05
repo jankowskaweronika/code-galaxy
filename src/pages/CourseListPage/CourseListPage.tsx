@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { SearchBar } from "../components/SearchBar";
-import { CourseCard } from "../components/CourseCard";
+import { SearchBar } from "../../components/SearchBar";
+import { CourseCard } from "../../components/CourseCard";
 import { Box } from "@mui/material";
 
-import courses from "../data/courses.json";
+import courses from "../../data/courses.json";
 
 const CourseListPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState("");

@@ -1,4 +1,4 @@
-import CourseListPage from "./pages/CourseListPage"
+import CourseListPage from "./pages/CourseListPage/CourseListPage"
 
 function App() {
   return (
