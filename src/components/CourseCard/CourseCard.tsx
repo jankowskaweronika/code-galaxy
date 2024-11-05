@@ -28,7 +28,8 @@ const CourseCard: React.FC<CourseCardProps> = ({
             sx={{
                 maxWidth: 545,
                 display: 'flex',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                height: 500,
             }}
         >
             <CardMedia
@@ -37,22 +38,41 @@ const CourseCard: React.FC<CourseCardProps> = ({
                 image={image}
                 alt={name}
                 sx={{
-                    objectFit: 'contain',
-                    height: 294,
+                    height: '200px',
+                    objectFit: 'cover',
                     width: '100%'
                 }}
             />
-            <CardContent>
-                <Typography variant="h5" component="div">
+            <CardContent
+                sx={{
+                    flexGrow: 1,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    gap: 1
+                }}
+            >
+                <Typography
+                    variant="h5"
+                    component="div"
+                    sx={{
+                        height: '64px',
+                    }}
+                >
                     {name}
                 </Typography>
-                <Typography variant="body2" color="text.secondary">
+                <Typography
+                    variant="body2"
+                    color="text.secondary"
+                >
                     {description}
                 </Typography>
                 <Typography
                     variant="subtitle1"
                     color="primary"
-                    sx={{ fontWeight: 'bold', mt: 1 }}
+                    sx={{
+                        fontWeight: 'bold',
+                        mt: "auto"
+                    }}
                 >
                     {price.toLocaleString('pl-PL', {
                         style: 'currency',

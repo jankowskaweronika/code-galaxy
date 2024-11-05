@@ -1,0 +1,44 @@
+[
+    {
+      "id": 1,
+      "name": "Wprowadzenie do programowania w Python",
+      "description": "Podstawy języka Python, zmienne, typy danych, kontrola przepływu, funkcje.",
+      "imageUrl": "https://picsum.photos/id/1/400/225",
+      "price": 100
+    },
+    {
+      "id": 2,
+      "name": "Tworzenie aplikacji webowych w React.js",
+      "description": "Nauka komponentów, state, props, hooks, routing, zarządzanie stanem.",
+      "imageUrl": "https://picsum.photos/id/2/400/225",
+      "price": 150
+    },
+    {
+      "id": 3,
+      "name": "Podstawy baz danych SQL",
+      "description": "Projektowanie baz danych, zapytania SQL, zarządzanie danymi.",
+      "imageUrl": "https://picsum.photos/id/3/400/225",
+      "price": 120
+    },
+    {
+      "id": 4,
+      "name": "Zaawansowane techniki w JavaScript",
+      "description": "Asynchroniczność, obiekty, funkcje, ES6, wzorce projektowe.",
+      "imageUrl": "https://picsum.photos/id/4/400/225",
+      "price": 150
+    },
+    {
+      "id": 5,
+      "name": "Podstawy baz danych Mongoo",
+      "description": "Projektowanie baz danych.",
+      "imageUrl": "https://picsum.photos/id/3/400/225",
+      "price": 120
+    },
+    {
+      "id": 6,
+      "name": "Zaawansowane techniki w React",
+      "description": "Redux, Hooki.",
+      "imageUrl": "https://picsum.photos/id/4/400/225",
+      "price": 150
+    }
+  ]
