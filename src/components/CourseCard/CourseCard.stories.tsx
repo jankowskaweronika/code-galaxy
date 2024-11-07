@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import CourseCard from './CourseCard';
 
-import logo from '../../assets/logo.png'
-
 const meta: Meta<typeof CourseCard> = {
     title: 'Components/CourseCard',
     component: CourseCard,
@@ -22,7 +20,7 @@ type Story = StoryObj<typeof CourseCard>;
 
 export const Default: Story = {
     args: {
-        image: logo,
+        image: "https://picsum.photos/id/3/400/225",
         name: 'CodeRoad',
         price: 79.00,
         description: 'Kompleksowy kurs programowania!',
