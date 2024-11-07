@@ -3,10 +3,24 @@ import { SearchBar } from "../components/SearchBar";
 import { CourseCard } from "../components/CourseCard";
 import { Box } from "@mui/material";
 
-import courses from "../data/courses.json";
+import defaultCourses from "../data/courses.json";
 
-const CourseListPage: React.FC = () => {
-    const [searchTerm, setSearchTerm] = useState("");
+interface Course {
+    name: string;
+    imageUrl: string;
+    price: number;
+    description: string;
+}
+
+interface CourseListPageProps {
+    initialCourses?: Course[];
+    initialSearchTerm?: string;
+}
+
+const CourseListPage: React.FC<CourseListPageProps> = ({ initialCourses, initialSearchTerm = "" }) => {
+    const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
+
+    const courses = initialCourses || defaultCourses;
 
     const handleSearch = (value: string) => {
         setSearchTerm(value);
