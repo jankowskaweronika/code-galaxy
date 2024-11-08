@@ -1,9 +1,9 @@
 import React, { useState } from "react";
-import { SearchBar } from "../components/SearchBar";
-import { CourseCard } from "../components/CourseCard";
+import { SearchBar } from "../../components/SearchBar";
+import { CourseCard } from "../../components/CourseCard";
 import { Box } from "@mui/material";
 
-import defaultCourses from "../data/courses.json";
+import defaultCourses from "../../data/courses.json";
 
 interface Course {
     name: string;
