@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import CourseListPage from "./CourseListPage";
+import CourseListPage from "./CourseListPage/CourseListPage";
 
 const mockCourses = {
     typical: [
@@ -36,13 +36,13 @@ const mockCourses = {
         },
         {
             name: "React Fundamentals",
-            imageUrl: "/images/react.jpg",
+            imageUrl: "https://picsum.photos/id/3/400/225",
             price: 299.99,
             description: "Master React basics and core concepts"
         },
         {
             name: "TypeScript Advanced",
-            imageUrl: "/images/typescript.jpg",
+            imageUrl: "https://picsum.photos/id/3/400/225",
             price: 399.99,
             description: "Advanced TypeScript programming techniques"
         }

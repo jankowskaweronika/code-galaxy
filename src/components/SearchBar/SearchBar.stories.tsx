@@ -1,24 +1,11 @@
 import type { Meta, StoryObj } from '@storybook/react';
 import SearchBar from './SearchBar';
 import SearchIcon from '@mui/icons-material/Search';
-import CssBaseline from '@mui/material/CssBaseline';
-
-import { ThemeProvider, createTheme } from '@mui/material/styles';
-
-const theme = createTheme();
 
 const meta: Meta<typeof SearchBar> = {
     title: 'Components/SearchBar',
     component: SearchBar,
     tags: ['autodocs'],
-    decorators: [
-        (Story) => (
-            <ThemeProvider theme={theme}>
-                <CssBaseline />
-                <Story />
-            </ThemeProvider>
-        ),
-    ],
     argTypes: {
         icon: {
             defaultValue: SearchIcon,
@@ -57,12 +44,5 @@ export const CustomPlaceholder: Story = {
     args: {
         ...Default.args,
         placeholder: 'Wyszukaj kurs...'
-    }
-};
-
-export const CustomWidth: Story = {
-    args: {
-        ...Default.args,
-        className: 'max-w-md'
     }
 };
