@@ -11,7 +11,6 @@ interface Course {
     price: number;
     description: string;
 }
-
 interface CourseListPageProps {
     initialCourses?: Course[];
     initialSearchTerm?: string;

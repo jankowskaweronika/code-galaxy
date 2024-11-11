@@ -2,7 +2,21 @@ import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-const NotFoundPage: React.FC = () => {
+interface SimpleNotFoundPageProps {
+    title: string;
+    message: string;
+    description: string;
+    buttonText: string;
+    buttonLink: string;
+}
+
+const SimpleNotFoundPage: React.FC<SimpleNotFoundPageProps> = ({
+    title,
+    message,
+    description,
+    buttonText,
+    buttonLink,
+}) => {
     return (
         <Box
             sx={{
@@ -12,29 +26,29 @@ const NotFoundPage: React.FC = () => {
                 justifyContent: 'center',
                 minHeight: '100vh',
                 textAlign: 'center',
-                padding: 4
+                padding: 4,
             }}
         >
             <Typography variant="h1" component="h1" gutterBottom>
-                404
+                {title}
             </Typography>
             <Typography variant="h4" gutterBottom>
-                Oops! Strona nie została znaleziona.
+                {message}
             </Typography>
             <Typography variant="body1" color="text.secondary" gutterBottom>
-                Przepraszamy, ale strona, której szukasz, nie istnieje.
+                {description}
             </Typography>
             <Button
                 component={Link}
-                to="/"
+                to={buttonLink}
                 variant="contained"
                 color="primary"
                 sx={{ mt: 4 }}
             >
-                Wróć na stronę główną
+                {buttonText}
             </Button>
         </Box>
     );
 };
 
-export default NotFoundPage;
+export default SimpleNotFoundPage;

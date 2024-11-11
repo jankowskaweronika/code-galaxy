@@ -1,5 +1,5 @@
 import { Meta, StoryObj } from "@storybook/react";
-import CourseListPage from "./CourseListPage/CourseListPage";
+import CourseListPage from "./CourseListPage"
 
 const mockCourses = {
     typical: [
