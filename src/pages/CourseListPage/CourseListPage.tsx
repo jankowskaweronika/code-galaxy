@@ -4,13 +4,13 @@ import { CourseCard } from "../../components/CourseCard";
 import { Box } from "@mui/material";
 
 import defaultCourses from "../../data/courses.json";
-
 interface Course {
     name: string;
     imageUrl: string;
     price: number;
     description: string;
 }
+
 interface CourseListPageProps {
     initialCourses?: Course[];
     initialSearchTerm?: string;

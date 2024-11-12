@@ -1,10 +1,10 @@
 import { Meta, StoryObj } from '@storybook/react';
 import { MemoryRouter } from 'react-router-dom';
-import SimpleNotFoundPage from './404Page';
+import NotFoundPage from './404Page';
 
-const meta: Meta<typeof SimpleNotFoundPage> = {
+const meta: Meta<typeof NotFoundPage> = {
     title: 'Pages/SimpleNotFoundPage',
-    component: SimpleNotFoundPage,
+    component: NotFoundPage,
     tags: ['autodocs'],
     decorators: [
         (Story) => (
@@ -20,7 +20,7 @@ const meta: Meta<typeof SimpleNotFoundPage> = {
 
 export default meta;
 
-type Story = StoryObj<typeof SimpleNotFoundPage>;
+type Story = StoryObj<typeof NotFoundPage>;
 
 export const Default: Story = {
     args: {

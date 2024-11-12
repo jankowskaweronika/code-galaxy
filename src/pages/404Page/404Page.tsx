@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-interface SimpleNotFoundPageProps {
+interface NotFoundPageProps {
     title: string;
     message: string;
     description: string;
@@ -10,7 +10,7 @@ interface SimpleNotFoundPageProps {
     buttonLink: string;
 }
 
-const SimpleNotFoundPage: React.FC<SimpleNotFoundPageProps> = ({
+const NotFoundPage: React.FC<NotFoundPageProps> = ({
     title,
     message,
     description,
@@ -51,4 +51,4 @@ const SimpleNotFoundPage: React.FC<SimpleNotFoundPageProps> = ({
     );
 };
 
-export default SimpleNotFoundPage;
+export default NotFoundPage;
