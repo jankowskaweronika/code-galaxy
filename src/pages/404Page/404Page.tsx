@@ -2,7 +2,7 @@ import React from 'react';
 import { Box, Typography, Button } from '@mui/material';
 import { Link } from 'react-router-dom';
 
-interface NotFoundPageProps {
+type NotFoundPageProps = {
     title: string;
     message: string;
     description: string;

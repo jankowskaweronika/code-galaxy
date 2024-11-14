@@ -4,7 +4,8 @@ import { CourseCard } from "../../components/CourseCard";
 import { Box } from "@mui/material";
 
 import defaultCourses from "../../data/courses.json";
-interface Course {
+
+type Course = {
     name: string;
     imageUrl: string;
     price: number;
