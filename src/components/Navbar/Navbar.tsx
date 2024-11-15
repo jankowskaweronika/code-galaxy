@@ -1,22 +1,16 @@
-import {
-    AppBar,
-    Toolbar,
-    Box,
-    List,
-    ListItem,
-    styled,
-    ListItemButton,
-    ListItemText,
-    SxProps,
-    Theme
-} from "@mui/material";
-import logo from "../../assets/logo.png"
-import { Link } from "react-router-dom";
+import { AppBar, Toolbar, Box, IconButton, styled } from '@mui/material';
+import { Menu as MenuIcon } from '@mui/icons-material';
+import { SxProps, Theme } from "@mui/material";
+
+import DesktopMenu from './DesktopMenu';
+import MobileMenu from './MobileMenu';
+
+import logo from '../../assets/logo.png';
 
 export type MenuItemType = {
     text: string;
     to: string;
-}
+};
 
 export type NavbarProps = {
     logoSrc?: string;
@@ -29,88 +23,79 @@ export type NavbarProps = {
         backgroundColor?: string | ((theme: Theme) => string);
         hoverBackgroundColor?: string | ((theme: Theme) => string);
     };
-}
-
-export const defaultProps: Pick<NavbarProps, 'logoHeight' | 'menuItems'> = {
-    logoHeight: 30,
-    menuItems: [
-        {
-            text: "About",
-            to: "/about",
-        },
-        {
-            text: "Contact",
-            to: "/contact",
-        },
-        {
-            text: "Kursy",
-            to: "/courses"
-        }
-    ]
+    isDrawerOpen: boolean;
+    onDrawerToggle: () => void;
+    onDrawerClose: () => void;
 };
 
 const StyledToolbar = styled(Toolbar)({
-    display: "flex",
-    justifyContent: "space-between",
+    display: 'flex',
+    justifyContent: 'space-between',
 });
 
-const ListMenu = styled(List)(({ theme }) => ({
-    display: "none",
-    [theme.breakpoints.up("sm")]: {
-        display: "flex",
-    },
-}));
-
+export const defaultProps = {
+    logoHeight: 30,
+    menuItems: [
+        { text: 'About', to: '/about' },
+        { text: 'Contact', to: '/contact' },
+        { text: 'Kursy', to: '/courses' },
+    ],
+};
 
 const Navbar: React.FC<NavbarProps> = ({
     logoSrc = logo,
     logoHeight = defaultProps.logoHeight,
     menuItems = defaultProps.menuItems,
     containerStyles,
-    menuItemStyles
-}) => {
-    return (
-        <AppBar
-            component="nav"
-            position="absolute"
-            sx={{
-                backgroundColor: (theme) => theme.palette.primary.main,
-                ...containerStyles
-            }}
-            elevation={0}
-        >
-            <StyledToolbar>
-                <Box
-                    component="img"
-                    src={logoSrc}
-                    sx={{
-                        height: logoHeight,
-                    }}
-                />
-                <Box sx={{ display: { xs: "block", sm: "none" } }} />
-                <ListMenu>
-                    {(menuItems || []).map((item) => (
-                        <ListItem key={item.text}>
-                            <ListItemButton
-                                component={Link}
-                                to={item.to}
-                                sx={{
-                                    color: menuItemStyles?.color || ((theme) => theme.palette.background.default),
-                                    backgroundColor: menuItemStyles?.backgroundColor || 'transparent',
-                                    "&:hover": {
-                                        backgroundColor: menuItemStyles?.hoverBackgroundColor || "transparent",
-                                        color: menuItemStyles?.hoverColor || ((theme) => theme.palette.secondary.main),
-                                    },
-                                }}
-                            >
-                                <ListItemText primary={item.text} />
-                            </ListItemButton>
-                        </ListItem>
-                    ))}
-                </ListMenu>
-            </StyledToolbar>
-        </AppBar>
-    );
-};
+    menuItemStyles,
+    isDrawerOpen,
+    onDrawerToggle,
+    onDrawerClose,
+}) => (
+    <AppBar
+        component="nav"
+        position="absolute"
+        sx={{
+            backgroundColor: (theme) => theme.palette.primary.main,
+            ...containerStyles,
+        }}
+        elevation={0}
+    >
+        <StyledToolbar>
+            <Box
+                component="img"
+                src={logoSrc}
+                sx={{
+                    height: logoHeight,
+                }}
+            />
 
-export default Navbar;
+            <DesktopMenu
+                menuItems={menuItems}
+                menuItemStyles={menuItemStyles}
+            />
+
+            <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="end"
+                onClick={onDrawerToggle}
+                sx={{
+                    display: { xs: 'block', sm: 'none' },
+                    ml: 'auto',
+                }}
+            >
+                <MenuIcon />
+            </IconButton>
+        </StyledToolbar>
+
+        <MobileMenu
+            isOpen={isDrawerOpen}
+            onClose={onDrawerClose}
+            menuItems={menuItems}
+            menuItemStyles={menuItemStyles}
+        />
+    </AppBar>
+);
+
+export default Navbar
