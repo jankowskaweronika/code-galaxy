@@ -1,9 +1,9 @@
 import React from 'react';
 import { Drawer, Box, List, ListItem, ListItemButton, ListItemText } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { MenuItemType, NavbarProps } from './Navbar';
+import { MenuItemType, NavbarProps } from '../Navbar/Navbar';
 
-type MobileMenuProps = {
+export type MobileMenuProps = {
     isOpen: boolean;
     onClose: () => void;
     menuItems: MenuItemType[];
@@ -37,10 +37,11 @@ const MobileMenu: React.FC<MobileMenuProps> = ({
                             to={item.to}
                             onClick={onClose}
                             sx={{
-                                color: menuItemStyles?.color || 'text.primary',
-                                '&:hover': {
-                                    backgroundColor: menuItemStyles?.hoverBackgroundColor || 'action.hover',
-                                    color: menuItemStyles?.hoverColor || 'primary.main',
+                                color: ((theme) => theme.palette.background.default),
+                                backgroundColor: menuItemStyles?.backgroundColor || "transparent",
+                                "&:hover": {
+                                    backgroundColor: ((theme) => theme.palette.primary.main) || "transparent",
+                                    color: menuItemStyles?.hoverColor || ((theme) => theme.palette.secondary.main),
                                 },
                             }}
                         >
