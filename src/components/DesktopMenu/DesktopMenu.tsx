@@ -1,7 +1,7 @@
 import React from 'react';
 import { List, ListItem, ListItemButton, ListItemText, styled } from '@mui/material';
 import { Link } from 'react-router-dom';
-import { MenuItemType, NavbarProps } from './Navbar';
+import { MenuItemType, NavbarProps } from '../Navbar/Navbar';
 
 const StyledList = styled(List)(({ theme }) => ({
     display: 'none',
@@ -10,7 +10,7 @@ const StyledList = styled(List)(({ theme }) => ({
     },
 }));
 
-type DesktopMenuProps = {
+export type DesktopMenuProps = {
     menuItems: MenuItemType[];
     menuItemStyles?: NavbarProps['menuItemStyles'];
 };
