@@ -34,9 +34,9 @@ export default meta;
 type Story = StoryObj<typeof meta>;
 
 const defaultMenuItems = [
-    { text: 'Home', to: '/' },
-    { text: 'About', to: '/about' },
-    { text: 'Contact', to: '/contact' },
+    { text: 'O nas', to: '/about' },
+    { text: 'Kontakt', to: '/contact' },
+    { text: 'Kursy', to: '/course' },
 ];
 
 export const Default: Story = {

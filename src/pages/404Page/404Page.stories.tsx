@@ -24,9 +24,8 @@ type Story = StoryObj<typeof NotFoundPage>;
 
 export const Default: Story = {
     args: {
-        title: '404',
-        message: 'Oops! Strona nie została znaleziona.',
-        description: 'Przepraszamy, ale strona, której szukasz, nie istnieje.',
+        title: 'Ta strona nie istnieje',
+        message: 'Sprawdź czy adres strony jest poprawny',
         buttonText: 'Wróć na stronę główną',
         buttonLink: '/',
     },
@@ -34,9 +33,8 @@ export const Default: Story = {
 
 export const CustomTitle: Story = {
     args: {
-        title: '401',
-        message: 'Oops! Strona nie została znaleziona.',
-        description: 'Przepraszamy, ale strona, której szukasz, nie istnieje.',
+        title: '404',
+        message: 'Sprawdź czy adres strony jest poprawny',
         buttonText: 'Wróć na stronę główną',
         buttonLink: '/',
     },
@@ -44,19 +42,8 @@ export const CustomTitle: Story = {
 
 export const CustomMessage: Story = {
     args: {
-        title: '404',
+        title: 'Ta strona nie istnieje',
         message: 'Ups, wystąpił błąd...',
-        description: 'Przepraszamy, ale strona, której szukasz, nie istnieje.',
-        buttonText: 'Wróć na stronę główną',
-        buttonLink: '/',
-    },
-};
-
-export const CustomDescription: Story = {
-    args: {
-        title: '404',
-        message: 'Oops! Strona nie została znaleziona.',
-        description: 'Niestety, nie możemy wyświetlić tej strony w tym momencie.',
         buttonText: 'Wróć na stronę główną',
         buttonLink: '/',
     },
@@ -64,9 +51,8 @@ export const CustomDescription: Story = {
 
 export const CustomButton: Story = {
     args: {
-        title: '404',
-        message: 'Oops! Strona nie została znaleziona.',
-        description: 'Przepraszamy, ale strona, której szukasz, nie istnieje.',
+        title: 'Ta strona nie istnieje',
+        message: 'Sprawdź czy adres strony jest poprawny',
         buttonText: 'Powrót do domu',
         buttonLink: '/',
     },

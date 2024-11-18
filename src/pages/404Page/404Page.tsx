@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 type NotFoundPageProps = {
     title: string;
     message: string;
-    description: string;
     buttonText: string;
     buttonLink: string;
 }
@@ -13,7 +12,6 @@ type NotFoundPageProps = {
 const NotFoundPage: React.FC<NotFoundPageProps> = ({
     title,
     message,
-    description,
     buttonText,
     buttonLink,
 }) => {
@@ -29,14 +27,14 @@ const NotFoundPage: React.FC<NotFoundPageProps> = ({
                 padding: 4,
             }}
         >
+            <Typography variant="h1" component="div" sx={{ fontSize: '4rem', mb: 2 }}>
+                🚧
+            </Typography>
             <Typography variant="h1" component="h1" gutterBottom>
                 {title}
             </Typography>
             <Typography variant="h4" gutterBottom>
                 {message}
-            </Typography>
-            <Typography variant="body1" color="text.secondary" gutterBottom>
-                {description}
             </Typography>
             <Button
                 component={Link}

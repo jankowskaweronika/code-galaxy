@@ -2,8 +2,8 @@ import { AppBar, Toolbar, Box, IconButton, styled } from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
 import { SxProps, Theme } from "@mui/material";
 
-import DesktopMenu from './DesktopMenu';
-import MobileMenu from './MobileMenu';
+import DesktopMenu from '../DesktopMenu/DesktopMenu';
+import MobileMenu from '../MobileMenu/MobileMenu';
 
 import logo from '../../assets/logo.png';
 
@@ -36,8 +36,8 @@ const StyledToolbar = styled(Toolbar)({
 export const defaultProps = {
     logoHeight: 30,
     menuItems: [
-        { text: 'About', to: '/about' },
-        { text: 'Contact', to: '/contact' },
+        { text: 'O nas', to: '/about' },
+        { text: 'Kontakt', to: '/contact' },
         { text: 'Kursy', to: '/courses' },
     ],
 };
