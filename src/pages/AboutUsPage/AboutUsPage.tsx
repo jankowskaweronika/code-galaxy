@@ -8,6 +8,14 @@ import theme from '../../theme/theme';
 
 import { useNavigation } from '../../hooks/useNavigation';
 
+export type AboutUsPageProps = {
+    title?: string;
+    description?: string;
+    values?: string[];
+    teamTitle?: string;
+    team?: TeamMember[];
+}
+
 type TeamMember = {
     photo: string;
     name: string;
@@ -30,7 +38,12 @@ const team: TeamMember[] = [
     }
 ];
 
-const AboutUsPage: React.FC = () => {
+const AboutUsPage: React.FC<AboutUsPageProps> = ({
+    title = 'CodeRoad',
+    description = 'Nasza akademia szkoleń to miejsce, gdzie pasja spotyka profesjonalizm. Tworzymy wysokiej jakości kursy, które pomagają rozwijać umiejętności i osiągać wyznaczone cele zawodowe. Każdy kurs jest starannie przygotowany przez doświadczonych trenerów, którzy dzielą się sprawdzoną wiedzą i praktycznymi rozwiązaniami.',
+    values = ['Jakość merytoryczna', 'Indywidualne podejście', 'Praktyczne umiejętności', 'Ciągły rozwój'],
+    teamTitle = 'Nasz Zespół',
+}) => {
     const { isDrawerOpen, handleDrawerToggle, handleDrawerClose } = useNavigation();
 
     return (
@@ -57,7 +70,7 @@ const AboutUsPage: React.FC = () => {
                     color: theme.palette.primary.main
                 }}
             >
-                CodeRoad
+                {title}
             </Typography>
 
             <Box display="flex" flexDirection="column" gap={4}>
@@ -67,16 +80,7 @@ const AboutUsPage: React.FC = () => {
                             variant="body1"
                             sx={{ color: theme.palette.background.default }}
                         >
-                            Nasza akademia szkoleń to miejsce, gdzie pasja spotyka profesjonalizm.
-                            Tworzymy wysokiej jakości kursy, które pomagają rozwijać umiejętności
-                            i osiągać wyznaczone cele zawodowe.
-                        </Typography>
-                        <Typography
-                            variant="body1"
-                            sx={{ color: theme.palette.background.default }}
-                        >
-                            Każdy kurs jest starannie przygotowany przez doświadczonych trenerów,
-                            którzy dzielą się sprawdzoną wiedzą i praktycznymi rozwiązaniami.
+                            {description}
                         </Typography>
                     </Box>
 
@@ -101,10 +105,7 @@ const AboutUsPage: React.FC = () => {
                                 display='flex'
                                 sx={{ color: theme.palette.background.default }}
                             >
-                                • Jakość merytoryczna
-                                • Indywidualne podejście
-                                • Praktyczne umiejętności
-                                • Ciągły rozwój
+                                {values}
                             </Typography>
                         </Paper>
                     </Box>
@@ -119,7 +120,7 @@ const AboutUsPage: React.FC = () => {
                             color: theme.palette.primary.main
                         }}
                     >
-                        Nasz Zespół
+                        {teamTitle}
                     </Typography>
 
                     <Box
