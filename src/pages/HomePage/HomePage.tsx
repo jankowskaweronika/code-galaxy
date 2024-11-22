@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import { useNavigation } from '../../hooks/useNavigation';
+import LoginForm from '../../components/LoginForm/Loginorm';
 
 const HomePage: React.FC = () => {
     const { isDrawerOpen, handleDrawerToggle, handleDrawerClose } = useNavigation();
@@ -12,6 +13,7 @@ const HomePage: React.FC = () => {
                 onDrawerToggle={handleDrawerToggle}
                 onDrawerClose={handleDrawerClose}
             />
+            <LoginForm />
         </div>
     );
 };

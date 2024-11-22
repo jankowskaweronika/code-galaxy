@@ -10,6 +10,12 @@ import logo from '../../assets/logo.png';
 export type MenuItemType = {
     text: string;
     to: string;
+    isButton?: boolean;
+    buttonProps?: {
+        variant?: 'text' | 'contained' | 'outlined';
+        color?: 'primary' | 'secondary' | 'inherit';
+        sx?: SxProps<Theme>;
+    };
 };
 
 export type NavbarProps = {
@@ -39,6 +45,19 @@ export const defaultProps = {
         { text: 'O nas', to: '/about' },
         { text: 'Kontakt', to: '/contact' },
         { text: 'Kursy', to: '/courses' },
+        {
+            text: 'Zaloguj się',
+            to: '/login',
+            isButton: true,
+            buttonProps: {
+                variant: 'contained',
+                color: 'secondary',
+                sx: {
+                    borderRadius: '20px',
+                    textTransform: 'none'
+                }
+            }
+        }
     ],
 };
 
