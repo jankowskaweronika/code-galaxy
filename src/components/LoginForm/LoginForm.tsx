@@ -8,7 +8,7 @@ import {
     Box
 } from '@mui/material';
 
-export type LoginFormData = {
+export type LoginFormProps = {
     username: string;
     password: string;
     rememberMe: boolean;
