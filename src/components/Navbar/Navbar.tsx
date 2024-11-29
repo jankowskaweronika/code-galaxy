@@ -42,9 +42,9 @@ const StyledToolbar = styled(Toolbar)({
 export const defaultProps = {
     logoHeight: 30,
     menuItems: [
-        { text: 'O nas', to: '/about' },
-        { text: 'Kontakt', to: '/contact' },
-        { text: 'Kursy', to: '/courses' },
+        { text: 'O nas', to: '/about' } as MenuItemType,
+        { text: 'Kontakt', to: '/contact' } as MenuItemType,
+        { text: 'Kursy', to: '/courses' } as MenuItemType,
         {
             text: 'Zaloguj się',
             to: '/login',
@@ -57,10 +57,9 @@ export const defaultProps = {
                     textTransform: 'none'
                 }
             }
-        }
+        } as MenuItemType
     ],
 };
-
 const Navbar: React.FC<NavbarProps> = ({
     logoSrc = logo,
     logoHeight = defaultProps.logoHeight,

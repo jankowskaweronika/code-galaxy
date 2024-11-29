@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from '../../components/Navbar/Navbar';
 import { useNavigation } from '../../hooks/useNavigation';
 import { Container, Typography, Box, Button } from '@mui/material';
+import UserPage from '../UserPage/UserPage';
 
 const HomePage: React.FC = () => {
     const { isDrawerOpen, handleDrawerToggle, handleDrawerClose } = useNavigation();
@@ -50,6 +51,7 @@ const HomePage: React.FC = () => {
                     >
                         Zobacz kursy
                     </Button>
+                    <UserPage />
                 </Container>
             </Box>
         </>
