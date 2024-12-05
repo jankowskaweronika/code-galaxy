@@ -1,8 +1,10 @@
 import React, { useState } from "react";
+import { Container } from "@mui/material";
+import { MainLayout } from "../../layouts/MainLayout";
+import { SectionHeader } from "../../components/SectionHeader/SectionHeader";
 import { SearchBar } from "../../components/SearchBar";
+import { GridContainer } from "../../components/GridContainer/GridContainer";
 import { CourseCard } from "../../components/CourseCard";
-import { Box } from "@mui/material";
-
 import defaultCourses from "../../data/courses.json";
 
 type Course = {
@@ -12,55 +14,49 @@ type Course = {
     description: string;
 }
 
-interface CourseListPageProps {
+type CourseListPageProps = {
     initialCourses?: Course[];
     initialSearchTerm?: string;
 }
 
-const CourseListPage: React.FC<CourseListPageProps> = ({ initialCourses, initialSearchTerm = "" }) => {
+const CourseListPage: React.FC<CourseListPageProps> = ({
+    initialCourses = defaultCourses,
+    initialSearchTerm = ""
+}) => {
     const [searchTerm, setSearchTerm] = useState(initialSearchTerm);
 
-    const courses = initialCourses || defaultCourses;
-
-    const handleSearch = (value: string) => {
-        setSearchTerm(value);
-    };
-
-    const filteredCourses = courses.filter((course) =>
+    const filteredCourses = initialCourses.filter((course) =>
         course.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return (
-        <Box className="container mx-auto py-10">
-            <Box className="mb-8">
+        <MainLayout>
+            <Container maxWidth="lg" sx={{ py: 4 }}>
+                <SectionHeader
+                    title="Dostępne kursy"
+                    subtitle="Przeglądaj i wybierz kursy dopasowane do Twoich potrzeb"
+                />
+
                 <SearchBar
                     placeholder="Wyszukaj kurs..."
                     value={searchTerm}
-                    onChange={handleSearch}
+                    onChange={setSearchTerm}
+                    sx={{ mb: 4 }}
                 />
-            </Box>
 
-            <Box sx={{
-                display: 'grid',
-                gap: 3,
-                gridTemplateColumns: {
-                    xs: '1fr',
-                    sm: 'repeat(2, 1fr)',
-                    md: 'repeat(3, 1fr)',
-                    lg: 'repeat(4, 1fr)'
-                }
-            }}>
-                {filteredCourses.map((course) => (
-                    <CourseCard
-                        key={course.name}
-                        image={course.imageUrl}
-                        name={course.name}
-                        price={course.price}
-                        description={course.description}
-                    />
-                ))}
-            </Box>
-        </Box>
+                <GridContainer>
+                    {filteredCourses.map((course) => (
+                        <CourseCard
+                            key={course.name}
+                            image={course.imageUrl}
+                            name={course.name}
+                            price={course.price}
+                            description={course.description}
+                        />
+                    ))}
+                </GridContainer>
+            </Container>
+        </MainLayout>
     );
 };
 

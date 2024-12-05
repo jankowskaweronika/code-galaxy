@@ -1,8 +1,6 @@
 import React from 'react';
-
-import { InputBase, Paper } from '@mui/material';
+import { InputBase, Paper, SxProps, Theme } from '@mui/material';
 import { SvgIconComponent } from '@mui/icons-material';
-
 import SearchIcon from '@mui/icons-material/Search';
 
 export type SearchBarProps = {
@@ -11,12 +9,14 @@ export type SearchBarProps = {
     className?: string;
     placeholder?: string;
     icon?: SvgIconComponent;
+    sx?: SxProps<Theme>;
 }
 
 const SearchBar: React.FC<SearchBarProps> = ({
     onChange,
     value,
-    placeholder = 'Search'
+    placeholder = 'Search',
+    sx
 }) => {
     return (
         <Paper
@@ -26,7 +26,8 @@ const SearchBar: React.FC<SearchBarProps> = ({
                 display: 'flex',
                 alignItems: 'center',
                 width: '100%',
-                borderRadius: '50px'
+                borderRadius: '50px',
+                ...sx
             }}
             elevation={0}
             variant="outlined"
