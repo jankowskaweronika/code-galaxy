@@ -9,6 +9,7 @@ import HomePage from '../pages/HomePage/HomePage';
 import AboutUsPage from '../pages/AboutUsPage/AboutUsPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import DashboardUserPage from '../pages/DashboardUserPage/DashboardUserPage';
+import RegisterPage from '../pages/RegisterPage/RegisterPage'
 
 const Router: React.FC = () => {
     return (
@@ -19,6 +20,7 @@ const Router: React.FC = () => {
                     <Route path="/courses" element={<CourseListPage />} />
                     <Route path='/about' element={<AboutUsPage />} />
                     <Route path='/login' element={<LoginPage />} />
+                    <Route path="/register" element={<RegisterPage />} />
                     <Route path="*" element={<NotFoundPage
                         title={'Ta strona nie istnieje'}
                         message={'Sprawdź czy adres strony jest poprawny'}
