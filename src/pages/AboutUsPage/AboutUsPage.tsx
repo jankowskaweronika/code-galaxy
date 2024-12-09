@@ -1,188 +1,60 @@
 import React from 'react';
-import { Box, Typography, Container, Avatar, Paper } from '@mui/material';
+import { Container, Box, Typography } from '@mui/material';
+import { MainLayout } from '../../layouts/MainLayout';
 
-import { useNavigation } from '../../hooks/useNavigation';
-import Navbar from '../../components/Navbar/Navbar';
+import PageSection from '../../components/PageSection/PageSection';
+import ValueCard from '../../components/ValueCard/ValueCard';
+import TeamMemberCard from '../../components/TeamMemberCard/TeamMemberCard';
 
-import theme from '../../theme/theme';
+import { team } from '../../data/aboutUsData';
 
-import men from '../../assets/men.jpeg'
-import women from '../../assets/women.jpeg'
-
-
-export type AboutUsPageProps = {
-    title?: string;
-    description?: string;
-    values?: string[];
-    teamTitle?: string;
-    team?: TeamMember[];
-}
-
-type TeamMember = {
-    photo: string;
-    name: string;
-    role: string;
-    bio: string;
-};
-
-const team: TeamMember[] = [
-    {
-        photo: women,
-        name: 'Anna Kowalska',
-        role: 'Główny Trener',
-        bio: 'Ponad 10 lat doświadczenia w nauczaniu i rozwoju umiejętności zawodowych.'
-    },
-    {
-        photo: men,
-        name: 'Piotr Nowak',
-        role: 'Ekspert Techniczny',
-        bio: 'Specjalista z wieloletnim doświadczeniem w branży IT i szkoleniach.'
-    }
-];
-
-const AboutUsPage: React.FC<AboutUsPageProps> = ({
-    title = 'CodeRoad',
-    description = 'Nasza akademia szkoleń to miejsce, gdzie pasja spotyka profesjonalizm. Tworzymy wysokiej jakości kursy, które pomagają rozwijać umiejętności i osiągać wyznaczone cele zawodowe. Każdy kurs jest starannie przygotowany przez doświadczonych trenerów, którzy dzielą się sprawdzoną wiedzą i praktycznymi rozwiązaniami.',
-    values = ['Jakość merytoryczna', 'Indywidualne podejście', 'Praktyczne umiejętności', 'Ciągły rozwój'],
-    teamTitle = 'Nasz Zespół',
-}) => {
-    const { isDrawerOpen, handleDrawerToggle, handleDrawerClose } = useNavigation();
-
+const AboutUsPage: React.FC = () => {
     return (
-        <Container
-            maxWidth="lg"
-            sx={{
-                py: 4,
-                color: theme.palette.background.default,
-            }}
-        >
-            <Navbar
-                isDrawerOpen={isDrawerOpen}
-                onDrawerToggle={handleDrawerToggle}
-                onDrawerClose={handleDrawerClose}
-            />
-            {isDrawerOpen && <Navbar isDrawerOpen={false} onDrawerToggle={function (): void {
-                throw new Error('Function not implemented.');
-            }} onDrawerClose={function (): void {
-                throw new Error('Function not implemented.');
-            }} />}
-            <Typography
-                mt="100px"
-                variant="h3"
-                align="center"
-                sx={{
-                    mb: 4,
-                    fontWeight: 'bold',
-                    color: theme.palette.primary.main
-                }}
-            >
-                {title}
-            </Typography>
-
-            <Box display="flex" flexDirection="column" gap={4}>
-                <Box display="flex" flexDirection={{ xs: 'column', md: 'column' }} gap={4}>
-                    <Box textAlign='center'>
-                        <Typography
-                            variant="body1"
-                            sx={{ color: theme.palette.background.default }}
-                        >
-                            {description}
-                        </Typography>
-                    </Box>
-
-                    <Box>
-                        <Paper
-                            elevation={3}
-                            sx={{
-                                p: 3,
-                                backgroundColor: theme.palette.primary.main,
-                                borderRadius: 2
-                            }}
-                        >
-                            <Typography
-                                variant="h5"
-                                gutterBottom
-                                sx={{ color: theme.palette.background.default }}
-                            >
-                                Nasze Wartości
-                            </Typography>
-                            <Typography
-                                variant="body2"
-                                display='flex'
-                                sx={{ color: theme.palette.background.default }}
-                            >
-                                {values}
-                            </Typography>
-                        </Paper>
-                    </Box>
-                </Box>
-
-                <Box>
+        <MainLayout>
+            <Container maxWidth="lg" sx={{ py: 8 }}>
+                <PageSection
+                    title="CodeGalaxy"
+                    sx={{ mb: 6 }}
+                >
                     <Typography
-                        variant="h4"
+                        variant="body1"
                         align="center"
-                        sx={{
-                            my: 3,
-                            color: theme.palette.primary.main
-                        }}
+                        color="text.primary"
+                        sx={{ mb: 4 }}
                     >
-                        {teamTitle}
+                        Nasza akademia szkoleń to miejsce, gdzie pasja spotyka profesjonalizm.
+                        Tworzymy wysokiej jakości kursy, które pomagają rozwijać umiejętności
+                        i osiągać wyznaczone cele zawodowe.
                     </Typography>
 
+                    <ValueCard
+                        title="Nasze Wartości"
+                        values={[
+                            'Jakość merytoryczna',
+                            'Indywidualne podejście',
+                            'Praktyczne umiejętności',
+                            'Ciągły rozwój'
+                        ]}
+                    />
+                </PageSection>
+
+                <PageSection title="Nasz Zespół">
                     <Box
                         display="flex"
                         flexWrap="wrap"
                         justifyContent="center"
                         gap={3}
                     >
-                        {team.map((member: TeamMember) => (
-                            <Box
+                        {team.map((member) => (
+                            <TeamMemberCard
                                 key={member.name}
-                                display="flex"
-                                flexDirection="column"
-                                alignItems="center"
-                                textAlign="center"
-                                width={{ xs: '100%', sm: 'calc(50% - 24px)' }}
-                            >
-                                <Avatar
-                                    sx={{
-                                        width: 120,
-                                        height: 120,
-                                        mb: 2,
-                                        bgcolor: theme.palette.secondary.main,
-                                        color: theme.palette.background.default
-                                    }}
-                                    src={member.photo}
-                                >
-                                    {!member.photo && member.name.split(' ').map(n => n[0]).join('')}
-                                </Avatar>
-                                <Typography
-                                    variant="h6"
-                                    sx={{ color: theme.palette.primary.main }}
-                                >
-                                    {member.name}
-                                </Typography>
-                                <Typography
-                                    variant="subtitle1"
-                                    sx={{ color: theme.palette.background.default }}
-                                >
-                                    {member.role}
-                                </Typography>
-                                <Typography
-                                    variant="body2"
-                                    sx={{
-                                        mt: 1,
-                                        color: theme.palette.background.default
-                                    }}
-                                >
-                                    {member.bio}
-                                </Typography>
-                            </Box>
+                                {...member}
+                            />
                         ))}
                     </Box>
-                </Box>
-            </Box>
-        </Container>
+                </PageSection>
+            </Container>
+        </MainLayout>
     );
 };
 

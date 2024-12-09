@@ -16,7 +16,7 @@ import { Link as RouterLink } from 'react-router-dom';
 import { SxProps, Theme } from "@mui/material";
 import logo from '../../assets/logo.png';
 
-export interface MenuItemType {
+export type MenuItemType = {
     text: string;
     to: string;
     isButton?: boolean;
@@ -27,7 +27,7 @@ export interface MenuItemType {
     };
 }
 
-export interface NavbarProps {
+export type NavbarProps = {
     logoSrc?: string;
     logoHeight?: number;
     menuItems?: MenuItemType[];
@@ -61,7 +61,7 @@ const defaultMenuItems: MenuItemType[] = [
 
 const Navbar: React.FC<NavbarProps> = ({
     logoSrc = logo,
-    logoHeight = 100,
+    logoHeight = 80,
     menuItems = defaultMenuItems,
     containerStyles,
     isDrawerOpen,
