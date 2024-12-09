@@ -1,10 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/authContext';
+import { AuthError } from '../auth/types';
 
 export const useLogin = () => {
     const navigate = useNavigate();
     const { signInWithEmail, signInWithGoogle, resetPassword } = useAuth();
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [error, setError] = useState('');
@@ -20,7 +22,7 @@ export const useLogin = () => {
             await signInWithEmail(email, password);
             navigate('/dashboard');
         } catch (err) {
-            setError((err as Error).message);
+            setError((err as AuthError).message);
         } finally {
             setIsLoading(false);
         }
@@ -34,7 +36,7 @@ export const useLogin = () => {
             await signInWithGoogle();
             navigate('/dashboard');
         } catch (err) {
-            setError((err as Error).message);
+            setError((err as AuthError).message);
         } finally {
             setIsLoading(false);
         }
@@ -50,7 +52,7 @@ export const useLogin = () => {
             await resetPassword(email);
             setSuccessMessage('Link do resetowania hasła został wysłany na podany adres email');
         } catch (err) {
-            setError((err as Error).message);
+            setError((err as AuthError).message);
         }
     };
 

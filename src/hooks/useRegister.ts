@@ -1,17 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../auth/authContext';
-
-interface RegisterFormData {
-    email: string;
-    password: string;
-    confirmPassword: string;
-    displayName: string;
-}
+import { AuthError, RegisterFormData } from '../auth/types';
 
 export const useRegister = () => {
     const navigate = useNavigate();
     const { signUp, signInWithGoogle } = useAuth();
+
     const [formData, setFormData] = useState<RegisterFormData>({
         email: '',
         password: '',
@@ -20,11 +15,6 @@ export const useRegister = () => {
     });
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
-
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const { name, value } = e.target;
-        setFormData(prev => ({ ...prev, [name]: value }));
-    };
 
     const validateForm = () => {
         if (!formData.email || !formData.password || !formData.confirmPassword || !formData.displayName) {
@@ -42,6 +32,11 @@ export const useRegister = () => {
         return true;
     };
 
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData(prev => ({ ...prev, [name]: value }));
+    };
+
     const handleRegister = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         if (!validateForm()) return;
@@ -53,7 +48,7 @@ export const useRegister = () => {
             await signUp(formData.email, formData.password, formData.displayName);
             navigate('/dashboard');
         } catch (err) {
-            setError((err as Error).message);
+            setError((err as AuthError).message);
         } finally {
             setIsLoading(false);
         }
@@ -67,7 +62,7 @@ export const useRegister = () => {
             await signInWithGoogle();
             navigate('/dashboard');
         } catch (err) {
-            setError((err as Error).message);
+            setError((err as AuthError).message);
         } finally {
             setIsLoading(false);
         }
