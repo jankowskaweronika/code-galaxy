@@ -1,7 +1,6 @@
 import React from 'react';
 import { Box, Typography, Container, Avatar, Paper } from '@mui/material';
 
-import { MobileMenu } from '../../components/MobileMenu';
 import { useNavigation } from '../../hooks/useNavigation';
 import Navbar from '../../components/Navbar/Navbar';
 
@@ -62,7 +61,11 @@ const AboutUsPage: React.FC<AboutUsPageProps> = ({
                 onDrawerToggle={handleDrawerToggle}
                 onDrawerClose={handleDrawerClose}
             />
-            {isDrawerOpen && <MobileMenu onClose={handleDrawerClose} isOpen={false} menuItems={[]} />}
+            {isDrawerOpen && <Navbar isDrawerOpen={false} onDrawerToggle={function (): void {
+                throw new Error('Function not implemented.');
+            }} onDrawerClose={function (): void {
+                throw new Error('Function not implemented.');
+            }} />}
             <Typography
                 mt="100px"
                 variant="h3"

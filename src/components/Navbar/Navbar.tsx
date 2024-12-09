@@ -1,13 +1,22 @@
-import { AppBar, Toolbar, Box, IconButton, styled } from '@mui/material';
+import React from 'react';
+import {
+    AppBar,
+    Toolbar,
+    Box,
+    IconButton,
+    Button,
+    Drawer,
+    List,
+    ListItem,
+    ListItemButton,
+    ListItemText
+} from '@mui/material';
 import { Menu as MenuIcon } from '@mui/icons-material';
+import { Link as RouterLink } from 'react-router-dom';
 import { SxProps, Theme } from "@mui/material";
-
-import DesktopMenu from '../DesktopMenu/DesktopMenu';
-import MobileMenu from '../MobileMenu/MobileMenu';
-
 import logo from '../../assets/logo.png';
 
-export type MenuItemType = {
+export interface MenuItemType {
     text: string;
     to: string;
     isButton?: boolean;
@@ -16,104 +25,183 @@ export type MenuItemType = {
         color?: 'primary' | 'secondary' | 'inherit';
         sx?: SxProps<Theme>;
     };
-};
+}
 
-export type NavbarProps = {
+export interface NavbarProps {
     logoSrc?: string;
     logoHeight?: number;
     menuItems?: MenuItemType[];
     containerStyles?: SxProps<Theme>;
-    menuItemStyles?: {
-        color?: string | ((theme: Theme) => string);
-        hoverColor?: string | ((theme: Theme) => string);
-        backgroundColor?: string | ((theme: Theme) => string);
-        hoverBackgroundColor?: string | ((theme: Theme) => string);
-    };
     isDrawerOpen: boolean;
     onDrawerToggle: () => void;
     onDrawerClose: () => void;
-};
+}
 
-const StyledToolbar = styled(Toolbar)({
-    display: 'flex',
-    justifyContent: 'space-between',
-});
-
-export const defaultProps = {
-    logoHeight: 30,
-    menuItems: [
-        { text: 'O nas', to: '/about' } as MenuItemType,
-        { text: 'Kontakt', to: '/contact' } as MenuItemType,
-        { text: 'Kursy', to: '/courses' } as MenuItemType,
-        {
-            text: 'Zaloguj się',
-            to: '/login',
-            isButton: true,
-            buttonProps: {
-                variant: 'contained',
-                color: 'secondary',
-                sx: {
-                    borderRadius: '20px',
-                    textTransform: 'none'
+const defaultMenuItems: MenuItemType[] = [
+    { text: 'O nas', to: '/about' },
+    { text: 'Kontakt', to: '/contact' },
+    { text: 'Kursy', to: '/courses' },
+    {
+        text: 'Zaloguj się',
+        to: '/login',
+        isButton: true,
+        buttonProps: {
+            variant: 'contained',
+            color: 'secondary',
+            sx: {
+                px: 3,
+                py: 1,
+                '&:hover': {
+                    backgroundColor: 'secondary.dark',
                 }
             }
-        } as MenuItemType
-    ],
-};
+        }
+    }
+];
+
 const Navbar: React.FC<NavbarProps> = ({
     logoSrc = logo,
-    logoHeight = defaultProps.logoHeight,
-    menuItems = defaultProps.menuItems,
+    logoHeight = 100,
+    menuItems = defaultMenuItems,
     containerStyles,
-    menuItemStyles,
     isDrawerOpen,
     onDrawerToggle,
     onDrawerClose,
-}) => (
-    <AppBar
-        component="nav"
-        position="absolute"
-        sx={{
-            backgroundColor: (theme) => theme.palette.primary.main,
-            ...containerStyles,
-        }}
-        elevation={0}
-    >
-        <StyledToolbar>
-            <Box
-                component="img"
-                src={logoSrc}
-                sx={{
-                    height: logoHeight,
-                }}
-            />
+}) => {
+    return (
+        <AppBar
+            component="nav"
+            position="fixed"
+            sx={{
+                backgroundColor: 'primary.main',
+                ...containerStyles,
+            }}
+        >
+            <Toolbar sx={{ justifyContent: 'space-between' }}>
+                <RouterLink to="/">
+                    <Box
+                        component="img"
+                        src={logoSrc}
+                        alt="Logo"
+                        sx={{
+                            height: logoHeight,
+                            cursor: 'pointer'
+                        }}
+                    />
+                </RouterLink>
 
-            <DesktopMenu
-                menuItems={menuItems}
-                menuItemStyles={menuItemStyles}
-            />
+                <Box
+                    sx={{
+                        display: { xs: 'none', md: 'flex' },
+                        alignItems: 'center',
+                        gap: 3
+                    }}
+                >
+                    {menuItems.map((item) => (
+                        item.isButton ? (
+                            <Button
+                                key={item.text}
+                                component={RouterLink}
+                                to={item.to}
+                                variant={item.buttonProps?.variant || "text"}
+                                color={item.buttonProps?.color || "primary"}
+                                sx={{
+                                    ...item.buttonProps?.sx,
+                                    fontSize: '1rem',
+                                }}
+                            >
+                                {item.text}
+                            </Button>
+                        ) : (
+                            <Button
+                                key={item.text}
+                                component={RouterLink}
+                                to={item.to}
+                                sx={{
+                                    color: 'secondary.main',
+                                    fontSize: '1rem',
+                                    '&:hover': {
+                                        color: 'secondary.dark',
+                                        backgroundColor: 'transparent'
+                                    }
+                                }}
+                            >
+                                {item.text}
+                            </Button>
+                        )
+                    ))}
+                </Box>
 
-            <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                edge="end"
-                onClick={onDrawerToggle}
+                <IconButton
+                    edge="end"
+                    onClick={onDrawerToggle}
+                    sx={{
+                        display: { xs: 'block', md: 'none' },
+                        color: 'secondary.main'
+                    }}
+                >
+                    <MenuIcon />
+                </IconButton>
+            </Toolbar>
+
+            <Drawer
+                anchor="right"
+                open={isDrawerOpen}
+                onClose={onDrawerClose}
                 sx={{
-                    display: { xs: 'block', sm: 'none' },
-                    ml: 'auto',
+                    display: { xs: 'block', md: 'none' },
+                    '& .MuiDrawer-paper': {
+                        width: 250,
+                        backgroundColor: 'primary.main',
+                        mt: '64px'
+                    },
                 }}
             >
-                <MenuIcon />
-            </IconButton>
-        </StyledToolbar>
+                <List sx={{ p: 2 }}>
+                    {menuItems.map((item) => (
+                        <ListItem key={item.text} disablePadding sx={{ mb: 1 }}>
+                            {item.isButton ? (
+                                <Button
+                                    component={RouterLink}
+                                    to={item.to}
+                                    variant={item.buttonProps?.variant || "text"}
+                                    color={item.buttonProps?.color || "primary"}
+                                    onClick={onDrawerClose}
+                                    fullWidth
+                                    sx={{
+                                        ...item.buttonProps?.sx,
+                                        py: 1
+                                    }}
+                                >
+                                    {item.text}
+                                </Button>
+                            ) : (
+                                <ListItemButton
+                                    component={RouterLink}
+                                    to={item.to}
+                                    onClick={onDrawerClose}
+                                    sx={{
+                                        color: 'secondary.main',
+                                        borderRadius: 1,
+                                        '&:hover': {
+                                            backgroundColor: 'primary.dark'
+                                        }
+                                    }}
+                                >
+                                    <ListItemText
+                                        primary={item.text}
+                                        primaryTypographyProps={{
+                                            fontSize: '1rem'
+                                        }}
+                                    />
+                                </ListItemButton>
+                            )}
+                        </ListItem>
+                    ))}
+                </List>
+            </Drawer>
+        </AppBar>
+    );
+};
 
-        <MobileMenu
-            isOpen={isDrawerOpen}
-            onClose={onDrawerClose}
-            menuItems={menuItems}
-            menuItemStyles={menuItemStyles}
-        />
-    </AppBar>
-);
-
-export default Navbar
+export default Navbar;
