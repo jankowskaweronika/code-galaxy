@@ -6,7 +6,7 @@ type AuthLayoutProps = {
     children: React.ReactNode;
 };
 
-export const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
+const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
     return (
         <PageLayout maxWidth="xs" centered>
             <Paper
@@ -22,3 +22,5 @@ export const AuthLayout: React.FC<AuthLayoutProps> = ({ children }) => {
         </PageLayout>
     );
 };
+
+export default AuthLayout
