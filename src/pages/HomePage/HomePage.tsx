@@ -1,7 +1,8 @@
 import React from 'react';
 import { PageLayout } from '../../layouts/PageLayout';
 import { Button, Box } from '@mui/material';
-import { PageHeader } from '../../components/PageHeader/PageHeader';
+import PageHeader from '../../components/PageHeader/PageHeader';
+
 import StarField from '../../animation/StarField';
 
 const HomePage: React.FC = () => (
@@ -14,8 +15,8 @@ const HomePage: React.FC = () => (
         }}>
             <PageLayout centered maxWidth="md">
                 <PageHeader
-                    title="Witaj na platformie kursów programowania!"
-                    subtitle="Odkryj najlepsze kursy, rozwijaj swoje umiejętności i zostań mistrzem kodowania."
+                    title="Twoja podróż w kosmos programowania!"
+                    subtitle="CodeGalaxy – gdzie każda linia kodu to nowa galaktyka do odkrycia"
                 />
                 <Button
                     variant="contained"

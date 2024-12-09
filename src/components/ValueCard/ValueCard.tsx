@@ -14,13 +14,6 @@ const ValueCard: React.FC<ValueCardProps> = ({ title, values }) => (
             borderRadius: 2
         }}
     >
-        <Typography
-            variant="h5"
-            gutterBottom
-            sx={{ color: 'background.default' }}
-        >
-            {title}
-        </Typography>
         <Box sx={{ display: 'flex', flexWrap: 'wrap', gap: 2 }}>
             {values.map((value) => (
                 <Typography
@@ -28,7 +21,6 @@ const ValueCard: React.FC<ValueCardProps> = ({ title, values }) => (
                     variant="body2"
                     sx={{
                         color: 'background.default',
-                        backgroundColor: 'primary.dark',
                         padding: '4px 12px',
                         borderRadius: '16px'
                     }}

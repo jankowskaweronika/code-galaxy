@@ -24,7 +24,7 @@ const AboutUsPage: React.FC = () => {
                     >
                         Nasza akademia szkoleń to miejsce, gdzie pasja spotyka profesjonalizm.
                         Tworzymy wysokiej jakości kursy, które pomagają rozwijać umiejętności
-                        i osiągać wyznaczone cele zawodowe.
+                        i osiągać wyznaczone cele zawodowe. Nauka w dowolnym miejscu i czasie – platforma dostępna na różnych urządzeniach.
                     </Typography>
 
                     <ValueCard
@@ -33,7 +33,9 @@ const AboutUsPage: React.FC = () => {
                             'Jakość merytoryczna',
                             'Indywidualne podejście',
                             'Praktyczne umiejętności',
-                            'Ciągły rozwój'
+                            'Ciągły rozwój',
+                            'Elastyczność i wygoda',
+                            'Społeczność programistów'
                         ]}
                     />
                 </PageSection>

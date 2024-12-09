@@ -1,11 +1,11 @@
 import { Typography, Box } from '@mui/material';
 
-interface PageHeaderProps {
+type PageHeaderProps = {
     title: string;
     subtitle?: string;
 }
 
-export const PageHeader: React.FC<PageHeaderProps> = ({ title, subtitle }) => (
+const PageHeader: React.FC<PageHeaderProps> = ({ title, subtitle }) => (
     <Box sx={{ mb: 4, textAlign: 'center' }}>
         <Typography variant="h2" component="h1" gutterBottom sx={{ fontWeight: 'bold' }}>
             {title}
@@ -17,3 +17,5 @@ export const PageHeader: React.FC<PageHeaderProps> = ({ title, subtitle }) => (
         )}
     </Box>
 );
+
+export default PageHeader
