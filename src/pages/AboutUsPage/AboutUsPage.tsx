@@ -2,11 +2,14 @@ import React from 'react';
 import { Box, Typography, Container, Avatar, Paper } from '@mui/material';
 
 import { MobileMenu } from '../../components/MobileMenu';
+import { useNavigation } from '../../hooks/useNavigation';
 import Navbar from '../../components/Navbar/Navbar';
 
 import theme from '../../theme/theme';
 
-import { useNavigation } from '../../hooks/useNavigation';
+import men from '../../assets/men.jpeg'
+import women from '../../assets/women.jpeg'
+
 
 export type AboutUsPageProps = {
     title?: string;
@@ -25,13 +28,13 @@ type TeamMember = {
 
 const team: TeamMember[] = [
     {
-        photo: "https://thispersondoesnotexist.com/",
+        photo: women,
         name: 'Anna Kowalska',
         role: 'Główny Trener',
         bio: 'Ponad 10 lat doświadczenia w nauczaniu i rozwoju umiejętności zawodowych.'
     },
     {
-        photo: "https://thispersondoesnotexist.com/",
+        photo: men,
         name: 'Piotr Nowak',
         role: 'Ekspert Techniczny',
         bio: 'Specjalista z wieloletnim doświadczeniem w branży IT i szkoleniach.'
