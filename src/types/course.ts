@@ -11,16 +11,17 @@ export type CourseListPageProps = {
     initialSearchTerm?: string;
 }
 
-
 export type CourseCardProps = {
+    id: number;
     image: string;
     name: string;
     price: number;
     description: string;
-    disabled?: boolean;
+    purchased?: boolean;
+    progress?: number | undefined;
 }
 
 export interface UserCourse extends Course {
     purchased: boolean;
-    progress?: number;
+    progress?: number | undefined;
 }

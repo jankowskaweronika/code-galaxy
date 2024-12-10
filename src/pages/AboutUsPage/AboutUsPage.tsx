@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Box, Typography } from '@mui/material';
-import { MainLayout } from '../../layouts/MainLayout';
+import MainLayout from '../../layouts/MainLayout';
 
 import PageSection from '../../components/PageSection/PageSection';
 import ValueCard from '../../components/ValueCard/ValueCard';

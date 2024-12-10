@@ -1,6 +1,6 @@
 import { Typography, Box } from '@mui/material';
 
-interface SectionHeaderProps {
+type SectionHeaderProps = {
     title: string;
     subtitle?: string;
     align?: 'left' | 'center' | 'right';

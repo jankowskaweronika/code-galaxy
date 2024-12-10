@@ -1,26 +1,28 @@
-import { Box } from '@mui/material';
+import { Grid2 } from '@mui/material';
 
 type GridContainerProps = {
     children: React.ReactNode;
-    spacing?: number;
 }
 
 const GridContainer: React.FC<GridContainerProps> = ({
     children,
-    spacing = 3
 }) => (
-    <Box sx={{
-        display: 'grid',
-        gap: spacing,
-        gridTemplateColumns: {
-            xs: '1fr',
-            sm: 'repeat(2, 1fr)',
-            md: 'repeat(3, 1fr)',
-            lg: 'repeat(4, 1fr)'
-        }
-    }}>
+    <Grid2
+        container
+        spacing={4}
+        sx={{
+            display: 'grid',
+            gridTemplateColumns: {
+                xs: '1fr',
+                sm: 'repeat(2, 1fr)',
+                md: 'repeat(3, 1fr)',
+                lg: 'repeat(4, 1fr)'
+            },
+            gap: 4,
+        }}
+    >
         {children}
-    </Box>
+    </Grid2>
 );
 
 export default GridContainer

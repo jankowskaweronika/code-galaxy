@@ -10,6 +10,7 @@ import AboutUsPage from '../pages/AboutUsPage/AboutUsPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
 import DashboardUserPage from '../pages/DashboardUserPage/DashboardUserPage';
 import RegisterPage from '../pages/RegisterPage/RegisterPage'
+import UserCoursesPage from '../pages/UserCoursesPage/UserCoursesPage';
 
 const Router: React.FC = () => {
     return (
@@ -34,6 +35,7 @@ const Router: React.FC = () => {
                             </ProtectedRoute>
                         }
                     />
+                    <Route path="/dashboard/courses" element={<UserCoursesPage />} />
                 </Routes>
             </BrowserRouter>
         </AuthProvider>

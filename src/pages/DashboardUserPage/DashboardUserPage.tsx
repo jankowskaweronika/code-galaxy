@@ -11,7 +11,6 @@ const DashboardUserPage: React.FC = () => {
 
     return (
         <DashboardLayout
-            // menuItems={[]}
             drawer={<DashboardNavigation />}
             title={`Witaj, ${user?.displayName || 'Użytkowniku'}`}
         >
