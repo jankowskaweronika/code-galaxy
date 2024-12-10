@@ -10,7 +10,7 @@ export type DashboardMenuItem = {
     action?: () => void;
 }
 
-export const DashboardNavigation: React.FC = () => {
+const DashboardNavigation: React.FC = () => {
     const navigate = useNavigate();
     const { signOut } = useAuth();
 
@@ -44,3 +44,5 @@ export const DashboardNavigation: React.FC = () => {
         </List>
     );
 };
+
+export default DashboardNavigation

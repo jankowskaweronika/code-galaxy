@@ -1,8 +1,8 @@
 import React from 'react';
 import { Container, Typography, Box, Paper, Avatar, Button, Stack } from '@mui/material';
 import { Person } from '@mui/icons-material';
-import { DashboardLayout } from '../../layouts/DasboardUserLayout';
-import { DashboardNavigation } from '../../components/DashboardUserMenu/DasboardUserMenu';
+import DashboardLayout from '../../layouts/DasboardUserLayout';
+import DashboardNavigation from '../../components/DashboardNavigation/DashboardNavigation';
 import { useAuth } from '../../auth/authContext';
 
 
@@ -11,8 +11,9 @@ const DashboardUserPage: React.FC = () => {
 
     return (
         <DashboardLayout
-            menuItems={[]}
+            // menuItems={[]}
             drawer={<DashboardNavigation />}
+            title={`Witaj, ${user?.displayName || 'Użytkowniku'}`}
         >
             <Container maxWidth="md">
                 <Paper elevation={3} sx={{ p: 4, borderRadius: 2, mb: 4 }}>

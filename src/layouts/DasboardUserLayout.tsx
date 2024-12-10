@@ -1,65 +1,75 @@
 import React from 'react';
-import { Box, Drawer } from '@mui/material';
-import { DashboardMenuItem } from '../components/DashboardUserMenu/DasboardUserMenu';
-import { PageLayout } from './PageLayout';
+import { Box, useTheme, useMediaQuery } from '@mui/material';
+import DashboardAppBar from '../components/DasboardAppBar/DasboardAppBar';
+import DashboardDrawer from '../components/DasboardDrawer/DasboardDrawer';
+import DashboardContent from '../components/DasboardContent/DasboardContent';
 
 type DashboardLayoutProps = {
     children: React.ReactNode;
-    menuItems: DashboardMenuItem[];
     drawer: React.ReactNode;
+    title?: string;
 }
 
 const DRAWER_WIDTH = 240;
 
-export const DashboardLayout: React.FC<DashboardLayoutProps> = ({
+const DashboardUserLayout: React.FC<DashboardLayoutProps> = ({
     children,
-    drawer
+    drawer,
+    title = 'Profil użytkownika'
 }) => {
+    const theme = useTheme();
+    const isMobile = useMediaQuery(theme.breakpoints.down('md'));
     const [mobileOpen, setMobileOpen] = React.useState(false);
 
+    const handleDrawerToggle = () => {
+        setMobileOpen(!mobileOpen);
+    };
+
     return (
-        <PageLayout>
-            <Box sx={{ display: 'flex', minHeight: '100vh', pt: '64px' }}>
-                <Box component="nav" sx={{ width: { md: DRAWER_WIDTH }, flexShrink: { md: 0 } }}>
-                    {/* Mobile drawer */}
-                    <Drawer
+        <Box sx={{ display: 'flex', minHeight: '100vh' }}>
+            <DashboardAppBar
+                onMenuClick={handleDrawerToggle}
+                title={title}
+                drawerWidth={DRAWER_WIDTH}
+            />
+
+            <Box
+                component="nav"
+                sx={{
+                    width: isMobile ? 0 : DRAWER_WIDTH,
+                    flexShrink: { md: 0 }
+                }}
+            >
+                {/* Mobile drawer */}
+                {isMobile && (
+                    <DashboardDrawer
                         variant="temporary"
-                        anchor="left"
                         open={mobileOpen}
-                        onClose={() => setMobileOpen(false)}
-                        ModalProps={{ keepMounted: true }}
-                        sx={{
-                            display: { xs: 'block', md: 'none' },
-                            '& .MuiDrawer-paper': { width: DRAWER_WIDTH, boxSizing: 'border-box', mt: '64px' },
-                        }}
+                        onClose={handleDrawerToggle}
+                        drawerWidth={DRAWER_WIDTH}
                     >
                         {drawer}
-                    </Drawer>
+                    </DashboardDrawer>
+                )}
 
-                    {/* Desktop drawer */}
-                    <Drawer
+                {/* Desktop drawer */}
+                {!isMobile && (
+                    <DashboardDrawer
                         variant="permanent"
-                        sx={{
-                            display: { xs: 'none', md: 'block' },
-                            '& .MuiDrawer-paper': { width: DRAWER_WIDTH, boxSizing: 'border-box', mt: '64px' },
-                        }}
-                        open
+                        open={true}
+                        onClose={() => { }}
+                        drawerWidth={DRAWER_WIDTH}
                     >
                         {drawer}
-                    </Drawer>
-                </Box>
-
-                <Box
-                    component="main"
-                    sx={{
-                        flexGrow: 1,
-                        p: 3,
-                        width: { md: `calc(100% - ${DRAWER_WIDTH}px)` }
-                    }}
-                >
-                    {children}
-                </Box>
+                    </DashboardDrawer>
+                )}
             </Box>
-        </PageLayout>
+
+            <DashboardContent drawerWidth={DRAWER_WIDTH}>
+                {children}
+            </DashboardContent>
+        </Box>
     );
 };
+
+export default DashboardUserLayout
