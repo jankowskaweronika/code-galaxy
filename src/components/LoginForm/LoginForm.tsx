@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 
-interface LoginFormProps {
+type LoginFormProps = {
     email: string;
     setEmail: (email: string) => void;
     password: string;
@@ -21,7 +21,7 @@ interface LoginFormProps {
     onForgotPassword: () => Promise<void>;
 }
 
-export const LoginForm: React.FC<LoginFormProps> = ({
+const LoginForm: React.FC<LoginFormProps> = ({
     email,
     setEmail,
     password,
@@ -131,3 +131,5 @@ export const LoginForm: React.FC<LoginFormProps> = ({
         </>
     );
 };
+
+export default LoginForm

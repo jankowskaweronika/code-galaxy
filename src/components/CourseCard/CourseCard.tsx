@@ -8,13 +8,7 @@ import {
     CardActions
 } from '@mui/material';
 
-export type CourseCardProps = {
-    image: string;
-    name: string;
-    price: number;
-    description: string;
-    disabled?: boolean;
-}
+import { CourseCardProps } from '../../types/course';
 
 const CourseCard: React.FC<CourseCardProps> = ({
     image,

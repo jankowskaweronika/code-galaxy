@@ -4,7 +4,7 @@ import { useNavigation } from '../hooks/useNavigation';
 
 import Navbar from '../components/Navbar/Navbar';
 
-export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
+const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }) => {
     const { isDrawerOpen, handleDrawerToggle, handleDrawerClose } = useNavigation();
 
     return (
@@ -20,3 +20,5 @@ export const MainLayout: React.FC<{ children: React.ReactNode }> = ({ children }
         </>
     );
 };
+
+export default MainLayout

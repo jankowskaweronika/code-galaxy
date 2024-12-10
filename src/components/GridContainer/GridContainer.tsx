@@ -5,7 +5,7 @@ type GridContainerProps = {
     spacing?: number;
 }
 
-export const GridContainer: React.FC<GridContainerProps> = ({
+const GridContainer: React.FC<GridContainerProps> = ({
     children,
     spacing = 3
 }) => (
@@ -22,3 +22,5 @@ export const GridContainer: React.FC<GridContainerProps> = ({
         {children}
     </Box>
 );
+
+export default GridContainer

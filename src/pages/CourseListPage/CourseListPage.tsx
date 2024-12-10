@@ -1,23 +1,13 @@
 import React, { useState } from "react";
 import { Container } from "@mui/material";
-import { MainLayout } from "../../layouts/MainLayout";
-import { SectionHeader } from "../../components/SectionHeader/SectionHeader";
-import { SearchBar } from "../../components/SearchBar";
-import { GridContainer } from "../../components/GridContainer/GridContainer";
-import { CourseCard } from "../../components/CourseCard";
+import MainLayout from "../../layouts/MainLayout";
+import SectionHeader from "../../components/SectionHeader/SectionHeader";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import GridContainer from "../../components/GridContainer/GridContainer";
+import CourseCard from "../../components/CourseCard/CourseCard";
 import defaultCourses from "../../data/courses.json";
 
-type Course = {
-    name: string;
-    imageUrl: string;
-    price: number;
-    description: string;
-}
-
-type CourseListPageProps = {
-    initialCourses?: Course[];
-    initialSearchTerm?: string;
-}
+import { CourseListPageProps } from '../../types/course'
 
 const CourseListPage: React.FC<CourseListPageProps> = ({
     initialCourses = defaultCourses,

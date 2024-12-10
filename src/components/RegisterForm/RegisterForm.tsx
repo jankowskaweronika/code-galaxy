@@ -6,7 +6,7 @@ import {
 } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 
-interface RegisterFormProps {
+type RegisterFormProps = {
     formData: {
         email: string;
         password: string;
@@ -21,7 +21,7 @@ interface RegisterFormProps {
     onGoogleRegister: () => Promise<void>;
 }
 
-export const RegisterForm: React.FC<RegisterFormProps> = ({
+const RegisterForm: React.FC<RegisterFormProps> = ({
     formData,
     error,
     setError,
@@ -132,3 +132,5 @@ export const RegisterForm: React.FC<RegisterFormProps> = ({
         </>
     );
 };
+
+export default RegisterForm

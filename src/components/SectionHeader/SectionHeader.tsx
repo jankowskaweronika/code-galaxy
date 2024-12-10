@@ -6,7 +6,7 @@ interface SectionHeaderProps {
     align?: 'left' | 'center' | 'right';
 }
 
-export const SectionHeader: React.FC<SectionHeaderProps> = ({
+const SectionHeader: React.FC<SectionHeaderProps> = ({
     title,
     subtitle,
     align = 'center'
@@ -22,3 +22,5 @@ export const SectionHeader: React.FC<SectionHeaderProps> = ({
         )}
     </Box>
 );
+
+export default SectionHeader
