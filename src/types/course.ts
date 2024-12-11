@@ -2,8 +2,19 @@ export type Course = {
     id: number;
     name: string;
     description: string;
-    imageUrl: string;
     price: number;
+    imageUrl: string;
+    difficulty: 'beginner' | 'intermediate' | 'advanced';
+    totalDuration: number;
+    topics: Topic[];
+}
+
+export type Topic = {
+    id: string;
+    title: string;
+    content: string;
+    duration: number | string;
+    order: number;
 }
 
 export type CourseListPageProps = {
