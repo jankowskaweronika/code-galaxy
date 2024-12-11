@@ -1,3 +1,11 @@
+export type Topic = {
+    title: string;
+    content: string;
+    duration: number;
+    order: number;
+    isCompleted?: boolean;
+}
+
 export type Course = {
     id: number;
     name: string;
@@ -9,19 +17,14 @@ export type Course = {
     topics: Topic[];
 }
 
-export type Topic = {
-    id: string;
-    title: string;
-    content: string;
-    duration: number | string;
-    order: number;
+export interface UserCourse extends Course {
+    purchased: boolean;
+    progress: number | undefined;
+    lastAccessTime?: Date;
+    completedTopics?: number[];
 }
 
-export type CourseListPageProps = {
-    initialCourses?: Course[];
-    initialSearchTerm?: string;
-}
-
+// Props dla komponentów
 export type CourseCardProps = {
     id: number;
     image: string;
@@ -30,9 +33,15 @@ export type CourseCardProps = {
     description: string;
     purchased?: boolean;
     progress?: number | undefined;
+    onPurchase?: (courseId: number) => Promise<void>;
 }
 
-export interface UserCourse extends Course {
-    purchased: boolean;
-    progress?: number | undefined;
+export type CoursesGridLayoutProps = {
+    title: string;
+    subtitle: string;
+    courses: (Course | UserCourse)[];
+    searchTerm: string;
+    onSearchChange: (term: string) => void;
+    showProgress?: boolean;
+    onPurchase?: (courseId: number) => Promise<void>;
 }

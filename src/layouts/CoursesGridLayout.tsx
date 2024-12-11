@@ -4,16 +4,7 @@ import SectionHeader from '../components/SectionHeader/SectionHeader';
 import SearchBar from '../components/SearchBar/SearchBar';
 import GridContainer from '../components/GridContainer/GridContainer';
 import CourseCard from '../components/CourseCard/CourseCard';
-import { Course, UserCourse } from '../types/course';
-
-type CoursesGridLayoutProps = {
-    title: string;
-    subtitle: string;
-    courses: (Course | UserCourse)[];
-    searchTerm: string;
-    onSearchChange: (term: string) => void;
-    showProgress?: boolean;
-}
+import { Course, UserCourse, CoursesGridLayoutProps } from '../types/course';
 
 const CoursesGridLayout: React.FC<CoursesGridLayoutProps> = ({
     title,
@@ -21,7 +12,8 @@ const CoursesGridLayout: React.FC<CoursesGridLayoutProps> = ({
     courses,
     searchTerm,
     onSearchChange,
-    showProgress = false
+    showProgress = false,
+    onPurchase
 }) => {
     const filteredCourses = courses.filter((course) =>
         course.name.toLowerCase().includes(searchTerm.toLowerCase())
@@ -55,8 +47,9 @@ const CoursesGridLayout: React.FC<CoursesGridLayoutProps> = ({
                             name={course.name}
                             price={course.price}
                             description={course.description}
-                            purchased={isUserCourse(course) ? course.purchased : false}
+                            purchased={isUserCourse(course) ? course.purchased : undefined}
                             progress={showProgress && isUserCourse(course) ? course.progress : undefined}
+                            onPurchase={onPurchase}
                         />
                     ))}
                 </GridContainer>
