@@ -3,7 +3,7 @@ import { Course } from "../../types/course";
 import courseService from "../../utils/courseService";
 import { useAuth } from "../../auth/authContext";
 import CoursesGridLayout from "../../layouts/CoursesGridLayout";
-import { Snackbar, Alert } from '@mui/material';
+import { Snackbar, Alert, Box } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import MainLayout from "../../layouts/MainLayout";
 
@@ -69,23 +69,29 @@ const CourseListPage: React.FC = () => {
 
     return (
         <MainLayout>
-            <CoursesGridLayout
-                title="Dostępne kursy"
-                subtitle="Przeglądaj i wybierz kursy dopasowane do Twoich potrzeb"
-                courses={courses}
-                searchTerm={searchTerm}
-                onSearchChange={setSearchTerm}
-                onPurchase={handlePurchase}
-            />
-            <Snackbar
-                open={alert.open}
-                autoHideDuration={6000}
-                onClose={() => setAlert({ ...alert, open: false })}
-            >
-                <Alert severity={alert.type} onClose={() => setAlert({ ...alert, open: false })}>
-                    {alert.message}
-                </Alert>
-            </Snackbar>
+            <Box sx={{
+                minHeight: 'calc(100vh - 64px)',
+                overflowY: 'auto',
+                overflowX: 'hidden'
+            }}>
+                <CoursesGridLayout
+                    title="Dostępne kursy"
+                    subtitle="Przeglądaj i wybierz kursy dopasowane do Twoich potrzeb"
+                    courses={courses}
+                    searchTerm={searchTerm}
+                    onSearchChange={setSearchTerm}
+                    onPurchase={handlePurchase}
+                />
+                <Snackbar
+                    open={alert.open}
+                    autoHideDuration={6000}
+                    onClose={() => setAlert({ ...alert, open: false })}
+                >
+                    <Alert severity={alert.type} onClose={() => setAlert({ ...alert, open: false })}>
+                        {alert.message}
+                    </Alert>
+                </Snackbar>
+            </Box>
         </MainLayout>
     );
 };

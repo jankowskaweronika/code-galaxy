@@ -78,9 +78,7 @@ const ContactPage: React.FC = () => {
         setIsSubmitting(true);
 
         try {
-            // Tutaj możesz dodać logikę wysyłania wiadomości
-            // np. poprzez API lub Firebase
-            await new Promise(resolve => setTimeout(resolve, 1000)); // Symulacja wysyłania
+            await new Promise(resolve => setTimeout(resolve, 1000));
 
             setSubmitStatus({
                 show: true,
@@ -111,7 +109,6 @@ const ContactPage: React.FC = () => {
             ...prev,
             [name]: value
         }));
-        // Czyść błąd dla pola, które jest modyfikowane
         if (errors[name as keyof ContactFormData]) {
             setErrors(prev => ({
                 ...prev,
@@ -122,96 +119,102 @@ const ContactPage: React.FC = () => {
 
     return (
         <PageLayout maxWidth="sm">
-            <SectionHeader
-                title="Skontaktuj się z nami"
-                subtitle="Masz pytania? Chętnie na nie odpowiemy!"
-            />
+            <Box sx={{
+                minHeight: 'calc(100vh - 64px - 32px)',
+                display: 'flex',
+                flexDirection: 'column'
+            }}>
+                <SectionHeader
+                    title="Skontaktuj się z nami"
+                    subtitle="Masz pytania? Chętnie na nie odpowiemy!"
+                />
 
-            <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
-                <Box
-                    component="form"
-                    onSubmit={handleSubmit}
-                    sx={{
-                        display: 'flex',
-                        flexDirection: 'column',
-                        gap: 2
-                    }}
-                >
-                    <TextField
-                        required
-                        fullWidth
-                        label="Imię i nazwisko"
-                        name="name"
-                        value={formData.name}
-                        onChange={handleChange}
-                        error={!!errors.name}
-                        helperText={errors.name}
-                        disabled={isSubmitting}
-                    />
-
-                    <TextField
-                        required
-                        fullWidth
-                        label="Email"
-                        name="email"
-                        type="email"
-                        value={formData.email}
-                        onChange={handleChange}
-                        error={!!errors.email}
-                        helperText={errors.email}
-                        disabled={isSubmitting}
-                    />
-
-                    <TextField
-                        required
-                        fullWidth
-                        label="Temat"
-                        name="subject"
-                        value={formData.subject}
-                        onChange={handleChange}
-                        error={!!errors.subject}
-                        helperText={errors.subject}
-                        disabled={isSubmitting}
-                    />
-
-                    <TextField
-                        required
-                        fullWidth
-                        label="Wiadomość"
-                        name="message"
-                        multiline
-                        rows={4}
-                        value={formData.message}
-                        onChange={handleChange}
-                        error={!!errors.message}
-                        helperText={errors.message}
-                        disabled={isSubmitting}
-                    />
-
-                    <Button
-                        type="submit"
-                        variant="contained"
-                        size="large"
-                        disabled={isSubmitting}
-                        sx={{ mt: 2 }}
+                <Paper elevation={3} sx={{ p: 4, mt: 4 }}>
+                    <Box
+                        component="form"
+                        onSubmit={handleSubmit}
+                        sx={{
+                            display: 'flex',
+                            flexDirection: 'column',
+                            gap: 2
+                        }}
                     >
-                        {isSubmitting ? 'Wysyłanie...' : 'Wyślij wiadomość'}
-                    </Button>
-                </Box>
-            </Paper>
+                        <TextField
+                            required
+                            fullWidth
+                            label="Imię i nazwisko"
+                            name="name"
+                            value={formData.name}
+                            onChange={handleChange}
+                            error={!!errors.name}
+                            helperText={errors.name}
+                            disabled={isSubmitting}
+                        />
 
-            <Snackbar
-                open={submitStatus.show}
-                autoHideDuration={6000}
-                onClose={() => setSubmitStatus(prev => ({ ...prev, show: false }))}
-            >
-                <Alert
-                    severity={submitStatus.severity}
+                        <TextField
+                            required
+                            fullWidth
+                            label="Email"
+                            name="email"
+                            type="email"
+                            value={formData.email}
+                            onChange={handleChange}
+                            error={!!errors.email}
+                            helperText={errors.email}
+                            disabled={isSubmitting}
+                        />
+
+                        <TextField
+                            required
+                            fullWidth
+                            label="Temat"
+                            name="subject"
+                            value={formData.subject}
+                            onChange={handleChange}
+                            error={!!errors.subject}
+                            helperText={errors.subject}
+                            disabled={isSubmitting}
+                        />
+
+                        <TextField
+                            required
+                            fullWidth
+                            label="Wiadomość"
+                            name="message"
+                            multiline
+                            rows={4}
+                            value={formData.message}
+                            onChange={handleChange}
+                            error={!!errors.message}
+                            helperText={errors.message}
+                            disabled={isSubmitting}
+                        />
+
+                        <Button
+                            type="submit"
+                            variant="contained"
+                            size="large"
+                            disabled={isSubmitting}
+                            sx={{ mt: 2 }}
+                        >
+                            {isSubmitting ? 'Wysyłanie...' : 'Wyślij wiadomość'}
+                        </Button>
+                    </Box>
+                </Paper>
+
+                <Snackbar
+                    open={submitStatus.show}
+                    autoHideDuration={6000}
                     onClose={() => setSubmitStatus(prev => ({ ...prev, show: false }))}
                 >
-                    {submitStatus.message}
-                </Alert>
-            </Snackbar>
+                    <Alert
+                        severity={submitStatus.severity}
+                        onClose={() => setSubmitStatus(prev => ({ ...prev, show: false }))}
+                    >
+                        {submitStatus.message}
+                    </Alert>
+                </Snackbar>
+            </Box>
         </PageLayout>
     );
 };
