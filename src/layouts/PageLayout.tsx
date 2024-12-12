@@ -37,6 +37,7 @@ export const PageLayout: React.FC<PageLayoutProps> = ({
                         textAlign: 'center',
                     }),
                     padding: padding,
+                    pt: '86px'
                 }}
             >
                 <Container maxWidth={maxWidth}>
