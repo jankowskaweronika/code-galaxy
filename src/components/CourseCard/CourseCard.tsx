@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
     Card,
     CardMedia,
@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/authContext';
 import { CourseCardProps } from '../../types/course';
 
-const CourseCard: React.FC<CourseCardProps> = ({
+const CourseCard = ({
     id,
     image,
     name,
@@ -24,19 +24,16 @@ const CourseCard: React.FC<CourseCardProps> = ({
     purchased = false,
     progress,
     onPurchase
-}) => {
+}: CourseCardProps) => {
     const navigate = useNavigate();
     const { user } = useAuth();
-    const [isProcessing, setIsProcessing] = useState(false);
-    const [showLoginAlert, setShowLoginAlert] = useState(false);
-
-    function setError(_arg0: string) {
-        throw new Error('Function not implemented.');
-    }
+    const [isProcessing, setIsProcessing] = React.useState(false);
+    const [showLoginAlert, setShowLoginAlert] = React.useState(false);
+    const [error, setError] = React.useState('');
 
     const handleClick = async () => {
         if (purchased) {
-            navigate(`/course/${id}`);
+            navigate(`/dashboard/course/${id}`);
             return;
         }
 
@@ -197,9 +194,22 @@ const CourseCard: React.FC<CourseCardProps> = ({
                     Zaloguj się, aby kupić ten kurs
                 </Alert>
             </Snackbar>
+
+            <Snackbar
+                open={!!error}
+                autoHideDuration={6000}
+                onClose={() => setError('')}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert
+                    severity="error"
+                    onClose={() => setError('')}
+                >
+                    {error}
+                </Alert>
+            </Snackbar>
         </>
     );
 };
 
 export default CourseCard;
-
