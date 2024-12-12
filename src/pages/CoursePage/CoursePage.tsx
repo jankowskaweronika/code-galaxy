@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
     Box,
     Typography,
@@ -8,23 +8,35 @@ import {
     List,
     ListItem,
     ListItemText,
-    ListItemSecondaryAction,
     Chip,
-    CircularProgress
+    CircularProgress,
+    Button,
+    Snackbar,
+    Alert
 } from '@mui/material';
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useAuth } from '../../auth/authContext';
 import { Course } from '../../types/course';
 import DashboardUserLayout from '../../layouts/DasboardUserLayout';
 import DashboardNavigation from '../../components/DashboardNavigation/DashboardNavigation';
-import { collection, doc, getDoc, getDocs, setDoc } from 'firebase/firestore';
+import { collection, doc, getDoc, getDocs } from 'firebase/firestore';
 import { db } from '../../config/firebase.config';
+import courseService from '../../utils/courseService';
+
+type CourseProgress = {
+    completedTopics: Record<string, boolean>;
+    progress: number;
+}
 
 const CoursePage: React.FC = () => {
     const { courseId } = useParams<{ courseId: string }>();
     const { user } = useAuth();
+    const navigate = useNavigate();
     const [course, setCourse] = useState<Course | null>(null);
     const [completedTopics, setCompletedTopics] = useState<Record<string, boolean>>({});
     const [isLoading, setIsLoading] = useState(true);
+    const [isSaving, setIsSaving] = useState(false);
+    const [showSaveAlert, setShowSaveAlert] = useState(false);
 
     useEffect(() => {
         const fetchCourse = async () => {
@@ -44,7 +56,8 @@ const CoursePage: React.FC = () => {
                     const progressDoc = await getDoc(progressRef);
 
                     if (progressDoc.exists()) {
-                        setCompletedTopics(progressDoc.data().completedTopics || {});
+                        const data = progressDoc.data() as CourseProgress;
+                        setCompletedTopics(data.completedTopics || {});
                     }
                 }
             } catch (error) {
@@ -60,24 +73,33 @@ const CoursePage: React.FC = () => {
     const handleTopicCompletion = async (topicTitle: string, isCompleted: boolean) => {
         if (!user || !courseId || !course) return;
 
-        const newCompletedTopics = {
-            ...completedTopics,
-            [topicTitle]: isCompleted
-        };
+        setIsSaving(true);
+        try {
+            const newCompletedTopics = {
+                ...completedTopics,
+                [topicTitle]: isCompleted
+            };
 
-        setCompletedTopics(newCompletedTopics);
+            setCompletedTopics(newCompletedTopics);
 
-        const completedCount = Object.values(newCompletedTopics).filter(Boolean).length;
-        const totalProgress = Math.round((completedCount / course.topics.length) * 100);
+            await courseService.updateCourseProgress(
+                user.uid,
+                courseId,
+                newCompletedTopics,
+                course.topics.length
+            );
 
-        const progressRef = doc(db, 'users', user.uid, 'coursesProgress', courseId);
-        await setDoc(progressRef, {
-            completedTopics: newCompletedTopics,
-            lastUpdated: new Date().getTime()
-        });
+            setShowSaveAlert(true);
+        } catch (error) {
+            console.error('Error updating topic completion:', error);
+        } finally {
+            setIsSaving(false);
+        }
+    };
 
-        const purchasedRef = doc(db, 'users', user.uid, 'purchasedCourses', courseId);
-        await setDoc(purchasedRef, { progress: totalProgress }, { merge: true });
+    const handleReturn = () => {
+        if (isSaving) return;
+        navigate('/dashboard/progress');
     };
 
     if (isLoading) {
@@ -98,9 +120,23 @@ const CoursePage: React.FC = () => {
         );
     }
 
+    const currentProgress = Math.round(
+        (Object.values(completedTopics).filter(Boolean).length / course.topics.length) * 100
+    );
+
     return (
         <DashboardUserLayout drawer={<DashboardNavigation />}>
             <Box sx={{ maxWidth: 'lg', mx: 'auto', p: 3 }}>
+                <Button
+                    variant="outlined"
+                    startIcon={<ArrowBackIcon />}
+                    onClick={handleReturn}
+                    disabled={isSaving}
+                    sx={{ mb: 3 }}
+                >
+                    Wróć do postępów
+                </Button>
+
                 <Paper elevation={3} sx={{ p: 4 }}>
                     <Box sx={{ mb: 4 }}>
                         <Typography variant="h4" gutterBottom>
@@ -120,6 +156,11 @@ const CoursePage: React.FC = () => {
                                 color="primary"
                                 variant="outlined"
                             />
+                            <Chip
+                                label={`Ukończono: ${currentProgress}%`}
+                                color="primary"
+                                variant="outlined"
+                            />
                         </Box>
                     </Box>
 
@@ -132,6 +173,14 @@ const CoursePage: React.FC = () => {
                                 key={index}
                                 divider={index < course.topics.length - 1}
                                 sx={{ py: 2 }}
+                                secondaryAction={
+                                    <Checkbox
+                                        edge="end"
+                                        checked={completedTopics[topic.title] || false}
+                                        onChange={(e) => handleTopicCompletion(topic.title, e.target.checked)}
+                                        disabled={isSaving}
+                                    />
+                                }
                             >
                                 <ListItemText
                                     primary={topic.title}
@@ -141,18 +190,22 @@ const CoursePage: React.FC = () => {
                                         </Typography>
                                     }
                                 />
-                                <ListItemSecondaryAction>
-                                    <Checkbox
-                                        edge="end"
-                                        checked={completedTopics[topic.title] || false}
-                                        onChange={(e) => handleTopicCompletion(topic.title, e.target.checked)}
-                                    />
-                                </ListItemSecondaryAction>
                             </ListItem>
                         ))}
                     </List>
                 </Paper>
             </Box>
+
+            <Snackbar
+                open={showSaveAlert}
+                autoHideDuration={2000}
+                onClose={() => setShowSaveAlert(false)}
+                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
+            >
+                <Alert severity="success" onClose={() => setShowSaveAlert(false)}>
+                    Postęp został zapisany
+                </Alert>
+            </Snackbar>
         </DashboardUserLayout>
     );
 };

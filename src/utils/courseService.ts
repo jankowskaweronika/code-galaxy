@@ -8,7 +8,6 @@ const courseService = {
         const snapshot = await getDocs(coursesRef);
         return snapshot.docs.map(doc => {
             const data = doc.data();
-
             return {
                 ...data,
                 id: data.id 
@@ -18,56 +17,83 @@ const courseService = {
 
     async getUserCourses(userId: string): Promise<UserCourse[]> {
         const courses = await this.getAllCourses();
-        const purchasedCoursesRef = collection(db, 'users', userId, 'purchasedCourses');
-        const purchasedSnapshot = await getDocs(purchasedCoursesRef);
+        const progressRef = collection(db, 'users', userId, 'coursesProgress');
+        const progressSnapshot = await getDocs(progressRef);
         
-        const purchasedCoursesData = new Map(
-            purchasedSnapshot.docs.map(doc => [
-                parseInt(doc.id),
-                doc.data() as { progress: number }
+        const progressData = new Map(
+            progressSnapshot.docs.map(doc => [
+                doc.id,
+                doc.data()
             ])
         );
 
         return courses.map(course => ({
             ...course,
-            purchased: purchasedCoursesData.has(course.id),
-            progress: purchasedCoursesData.get(course.id)?.progress ?? undefined
+            purchased: progressData.has(course.id.toString()),
+            progress: progressData.get(course.id.toString())?.progress ?? 0
         }));
-    },
-
-    async purchaseCourse(userId: string, courseId: number): Promise<void> {
-        const purchasedCourseRef = doc(
-            db, 
-            'users', 
-            userId, 
-            'purchasedCourses', 
-            courseId.toString()
-        );
-
-        await setDoc(purchasedCourseRef, {
-            progress: 0
-        });
     },
 
     async getUserPurchasedCourses(userId: string): Promise<UserCourse[]> {
         const allCourses = await this.getAllCourses();
-        const purchasedCoursesRef = collection(db, 'users', userId, 'purchasedCourses');
-        const purchasedSnapshot = await getDocs(purchasedCoursesRef);
+        const progressRef = collection(db, 'users', userId, 'coursesProgress');
+        const progressSnapshot = await getDocs(progressRef);
         
-        const purchasedCoursesData = new Map(
-            purchasedSnapshot.docs.map(doc => [
-                parseInt(doc.id),
-                doc.data() as { progress: number }
+        const progressData = new Map(
+            progressSnapshot.docs.map(doc => [
+                doc.id,
+                doc.data()
             ])
         );
 
         return allCourses
-            .filter(course => purchasedCoursesData.has(course.id))
-            .map(course => ({
-                ...course,
-                purchased: true,
-                progress: purchasedCoursesData.get(course.id)!.progress
-            }));
+            .filter(course => progressData.has(course.id.toString()))
+            .map(course => {
+                const progress = progressData.get(course.id.toString());
+                return {
+                    ...course,
+                    purchased: true,
+                    progress: progress?.progress ?? 0
+                };
+            });
+    },
+
+    async purchaseCourse(userId: string, courseId: number): Promise<void> {
+        const courseProgressRef = doc(
+            db, 
+            'users', 
+            userId, 
+            'coursesProgress', 
+            courseId.toString()
+        );
+
+        await setDoc(courseProgressRef, {
+            completedTopics: {},
+            progress: 0
+        });
+    },
+
+    async updateCourseProgress(
+        userId: string, 
+        courseId: string, 
+        completedTopics: Record<string, boolean>,
+        totalTopics: number
+    ): Promise<void> {
+        const completedCount = Object.values(completedTopics).filter(Boolean).length;
+        const progress = Math.round((completedCount / totalTopics) * 100);
+
+        const courseProgressRef = doc(
+            db, 
+            'users', 
+            userId, 
+            'coursesProgress', 
+            courseId
+        );
+
+        await setDoc(courseProgressRef, {
+            completedTopics,
+            progress
+        });
     }
 };
 
