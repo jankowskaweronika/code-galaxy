@@ -1,15 +1,23 @@
 import React, { useState, useEffect } from "react";
-import MainLayout from "../../layouts/MainLayout";
-import CoursesGridLayout from "../../layouts/CoursesGridLayout";
 import { Course } from "../../types/course";
 import courseService from "../../utils/courseService";
 import { useAuth } from "../../auth/authContext";
+import CoursesGridLayout from "../../layouts/CoursesGridLayout";
+import { Snackbar, Alert } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import MainLayout from "../../layouts/MainLayout";
 
 const CourseListPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const [courses, setCourses] = useState<Course[]>([]);
     const [isLoading, setIsLoading] = useState(true);
     const { user } = useAuth();
+    const navigate = useNavigate();
+    const [alert, setAlert] = useState<{ open: boolean; message: string; type: 'success' | 'error' }>({
+        open: false,
+        message: '',
+        type: 'success'
+    });
 
     useEffect(() => {
         const fetchCourses = async () => {
@@ -27,18 +35,36 @@ const CourseListPage: React.FC = () => {
     }, []);
 
     const handlePurchase = async (courseId: number) => {
-        if (!user) return;
+        if (!user) {
+            setAlert({
+                open: true,
+                message: 'Musisz być zalogowany, aby kupić kurs',
+                type: 'error'
+            });
+            return;
+        }
 
         try {
             await courseService.purchaseCourse(user.uid, courseId);
+            setAlert({
+                open: true,
+                message: 'Kurs został pomyślnie zakupiony!',
+                type: 'success'
+            });
+            setTimeout(() => navigate('/dashboard/progress'), 1500);
         } catch (error) {
-            console.error('Error purchasing course:', error);
-            throw error;
+            setAlert({
+                open: true,
+                message: 'Wystąpił błąd podczas zakupu kursu',
+                type: 'error'
+            });
         }
     };
 
     if (isLoading) {
-        return <div>Loading...</div>;
+        return <MainLayout>
+            <div>Loading...</div>
+        </MainLayout>;
     }
 
     return (
@@ -51,6 +77,15 @@ const CourseListPage: React.FC = () => {
                 onSearchChange={setSearchTerm}
                 onPurchase={handlePurchase}
             />
+            <Snackbar
+                open={alert.open}
+                autoHideDuration={6000}
+                onClose={() => setAlert({ ...alert, open: false })}
+            >
+                <Alert severity={alert.type} onClose={() => setAlert({ ...alert, open: false })}>
+                    {alert.message}
+                </Alert>
+            </Snackbar>
         </MainLayout>
     );
 };

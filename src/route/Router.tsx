@@ -8,9 +8,10 @@ import NotFoundPage from '../pages/404Page/404Page';
 import HomePage from '../pages/HomePage/HomePage';
 import AboutUsPage from '../pages/AboutUsPage/AboutUsPage';
 import LoginPage from '../pages/LoginPage/LoginPage';
-import UserCoursesPage from '../pages/UserCoursesPage/UserCoursesPage';
-import DashboardUserPage from '../pages/DashboardUserPage/DashboardUserPage';
+import DashboardUserPage from '../pages/DashboardUserCoursesList/DashboardUserCoursesList';
 import RegisterPage from '../pages/RegisterPage/RegisterPage'
+import DashboardCourseList from '../pages/DashboardUserCoursesList/DashboardUserCoursesList';
+import PurchasedCoursesPage from '../pages/PurchasedDashboardCoursesPage/PurchasedDashboardCoursesPage';
 
 const Router: React.FC = () => {
     return (
@@ -25,7 +26,9 @@ const Router: React.FC = () => {
 
                     <Route path="/dashboard" element={<ProtectedRoute />}>
                         <Route index element={<DashboardUserPage />} />
-                        <Route path="courses" element={<UserCoursesPage />} />
+                        <Route path="courses" element={<DashboardCourseList />} />
+                        <Route path="progress" element={<PurchasedCoursesPage />} />
+                        {/* <Route path="settings" element={<SettingsPage />} /> */}
                     </Route>
 
                     <Route path="*" element={

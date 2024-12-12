@@ -25,11 +25,37 @@ const courseService = {
     },
 
     async purchaseCourse(userId: string, courseId: number): Promise<void> {
-        const purchasedCourseRef = doc(db, 'users', userId, 'purchasedCourses', courseId.toString());
+        const purchasedCourseRef = doc(
+            db, 
+            'users', 
+            userId, 
+            'purchasedCourses', 
+            courseId.toString()
+        );
+
         await setDoc(purchasedCourseRef, {
             purchasedAt: new Date().toISOString(),
             progress: 0
         });
+    },
+
+    async getUserPurchasedCourses(userId: string): Promise<UserCourse[]> {
+        const allCourses = await this.getAllCourses();
+        
+        const purchasedCoursesRef = collection(db, 'users', userId, 'purchasedCourses');
+        const purchasedSnapshot = await getDocs(purchasedCoursesRef);
+        
+        const purchasedIds = new Set(
+            purchasedSnapshot.docs.map(doc => parseInt(doc.id))
+        );
+
+        return allCourses
+            .filter(course => purchasedIds.has(course.id))
+            .map(course => ({
+                ...course,
+                purchased: true,
+                progress: 0 
+            }));
     }
 };
 

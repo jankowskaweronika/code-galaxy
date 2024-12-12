@@ -34,7 +34,6 @@ const UserCoursesPage: React.FC = () => {
 
         try {
             await courseService.purchaseCourse(user.uid, courseId);
-            // Odśwież listę kursów po zakupie
             const updatedCourses = await courseService.getUserCourses(user.uid);
             setUserCourses(updatedCourses);
         } catch (error) {
@@ -50,11 +49,11 @@ const UserCoursesPage: React.FC = () => {
     return (
         <DashboardUserLayout
             drawer={<DashboardNavigation />}
-            title="Twoje kursy"
+            title="Kursy"
         >
             <CoursesGridLayout
-                title="Twoje kursy"
-                subtitle="Zobacz swoje kursy i postępy w nauce"
+                title="Kursy"
+                subtitle="Zobacz wszystkie kursy"
                 courses={userCourses}
                 searchTerm={searchTerm}
                 onSearchChange={setSearchTerm}

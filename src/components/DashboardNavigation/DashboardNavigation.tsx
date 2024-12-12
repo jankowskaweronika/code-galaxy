@@ -17,7 +17,7 @@ const DashboardNavigation: React.FC = () => {
     const menuItems: DashboardMenuItem[] = [
         { text: 'Twój profil', icon: <Person />, path: '/dashboard' },
         { text: 'Twoje postępy', icon: <Timeline />, path: '/dashboard/progress' },
-        { text: 'Twoje kursy', icon: <School />, path: '/dashboard/courses' },
+        { text: 'Kursy', icon: <School />, path: '/dashboard/courses' },
         { text: 'Ustawienia', icon: <Settings />, path: '/dashboard/settings' },
         { text: 'Wyloguj się', icon: <ExitToApp />, path: '', action: () => signOut() }
     ];
