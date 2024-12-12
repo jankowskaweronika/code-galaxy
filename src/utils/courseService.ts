@@ -6,21 +6,32 @@ const courseService = {
     async getAllCourses(): Promise<Course[]> {
         const coursesRef = collection(db, 'courses');
         const snapshot = await getDocs(coursesRef);
-        return snapshot.docs.map(doc => doc.data() as Course);
+        return snapshot.docs.map(doc => {
+            const data = doc.data();
+
+            return {
+                ...data,
+                id: data.id 
+            } as Course;
+        });
     },
 
     async getUserCourses(userId: string): Promise<UserCourse[]> {
         const courses = await this.getAllCourses();
         const purchasedCoursesRef = collection(db, 'users', userId, 'purchasedCourses');
         const purchasedSnapshot = await getDocs(purchasedCoursesRef);
-        const purchasedCourseIds = new Set(
-            purchasedSnapshot.docs.map(doc => parseInt(doc.id))
+        
+        const purchasedCoursesData = new Map(
+            purchasedSnapshot.docs.map(doc => [
+                parseInt(doc.id),
+                doc.data() as { progress: number }
+            ])
         );
 
         return courses.map(course => ({
             ...course,
-            purchased: purchasedCourseIds.has(course.id),
-            progress: purchasedCourseIds.has(course.id) ? 0 : undefined
+            purchased: purchasedCoursesData.has(course.id),
+            progress: purchasedCoursesData.get(course.id)?.progress ?? undefined
         }));
     },
 
@@ -34,29 +45,30 @@ const courseService = {
         );
 
         await setDoc(purchasedCourseRef, {
-            purchasedAt: new Date().toISOString(),
             progress: 0
         });
     },
 
     async getUserPurchasedCourses(userId: string): Promise<UserCourse[]> {
         const allCourses = await this.getAllCourses();
-        
         const purchasedCoursesRef = collection(db, 'users', userId, 'purchasedCourses');
         const purchasedSnapshot = await getDocs(purchasedCoursesRef);
         
-        const purchasedIds = new Set(
-            purchasedSnapshot.docs.map(doc => parseInt(doc.id))
+        const purchasedCoursesData = new Map(
+            purchasedSnapshot.docs.map(doc => [
+                parseInt(doc.id),
+                doc.data() as { progress: number }
+            ])
         );
 
         return allCourses
-            .filter(course => purchasedIds.has(course.id))
+            .filter(course => purchasedCoursesData.has(course.id))
             .map(course => ({
                 ...course,
                 purchased: true,
-                progress: 0 
+                progress: purchasedCoursesData.get(course.id)!.progress
             }));
     }
 };
 
-export default courseService
+export default courseService;

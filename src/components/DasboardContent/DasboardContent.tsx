@@ -1,7 +1,7 @@
 import React from 'react';
 import { Box, useTheme, useMediaQuery } from '@mui/material';
 
-interface DashboardContentProps {
+type DashboardContentProps = {
     children: React.ReactNode;
     drawerWidth: number;
 }

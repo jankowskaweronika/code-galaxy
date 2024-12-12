@@ -5,6 +5,7 @@ import { useAuth } from '../../auth/authContext';
 import CoursesGridLayout from '../../layouts/CoursesGridLayout';
 import DashboardUserLayout from '../../layouts/DasboardUserLayout';
 import DashboardNavigation from '../../components/DashboardNavigation/DashboardNavigation';
+import { Box, CircularProgress } from '@mui/material';
 
 const PurchasedDashboardCoursesPage: React.FC = () => {
     const { user } = useAuth();
@@ -13,27 +14,29 @@ const PurchasedDashboardCoursesPage: React.FC = () => {
     const [searchTerm, setSearchTerm] = useState('');
 
     useEffect(() => {
+        const fetchPurchasedCourses = async () => {
+            if (!user) return;
+
+            try {
+                const courses = await courseService.getUserPurchasedCourses(user.uid);
+                setPurchasedCourses(courses);
+            } catch (error) {
+                console.error('Błąd podczas pobierania zakupionych kursów:', error);
+            } finally {
+                setIsLoading(false);
+            }
+        };
+
         if (user) {
             fetchPurchasedCourses();
         }
     }, [user]);
 
-    const fetchPurchasedCourses = async () => {
-        if (!user) return;
-
-        try {
-            const courses = await courseService.getUserPurchasedCourses(user.uid);
-            setPurchasedCourses(courses);
-        } catch (error) {
-            console.error('Błąd z pobieraniem zakupionych kursów:', error);
-        } finally {
-            setIsLoading(false);
-        }
-    };
-
     if (isLoading) {
         return <DashboardUserLayout drawer={<DashboardNavigation />}>
-            <div>Loading...</div>
+            <Box display="flex" justifyContent="center" alignItems="center" minHeight="200px">
+                <CircularProgress />
+            </Box>
         </DashboardUserLayout>;
     }
 

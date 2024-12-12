@@ -20,20 +20,17 @@ export type Course = {
 export interface UserCourse extends Course {
     purchased: boolean;
     progress: number | undefined;
-    lastAccessTime?: Date;
-    completedTopics?: number[];
 }
 
-// Props dla komponentów
 export type CourseCardProps = {
     id: number;
     image: string;
     name: string;
     price: number;
     description: string;
-    purchased?: boolean;
+    purchased?: boolean | undefined;
     progress?: number | undefined;
-    onPurchase?: (courseId: number) => Promise<void>;
+    onPurchase?: ((courseId: number) => Promise<void> | undefined) | undefined;
 }
 
 export type CoursesGridLayoutProps = {
