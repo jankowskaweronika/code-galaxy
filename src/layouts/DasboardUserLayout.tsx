@@ -40,7 +40,6 @@ const DashboardUserLayout: React.FC<DashboardLayoutProps> = ({
                     flexShrink: { md: 0 }
                 }}
             >
-                {/* Mobile drawer */}
                 {isMobile && (
                     <DashboardDrawer
                         variant="temporary"
@@ -52,7 +51,6 @@ const DashboardUserLayout: React.FC<DashboardLayoutProps> = ({
                     </DashboardDrawer>
                 )}
 
-                {/* Desktop drawer */}
                 {!isMobile && (
                     <DashboardDrawer
                         variant="permanent"

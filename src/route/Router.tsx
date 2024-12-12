@@ -13,6 +13,7 @@ import DashboardCourseList from '../pages/DashboardUserCoursesList/DashboardUser
 import PurchasedCoursesPage from '../pages/PurchasedDashboardCoursesPage/PurchasedDashboardCoursesPage';
 import ContactPage from '../pages/ContactPage/ContactPage';
 import DashboardUserProfilePage from '../pages/DashboardUserProfilePage/DashboardUserProfilePage';
+import DashboardSettingsPage from '../pages/DashboardSettingsPage/DashboardSettingsPage';
 
 const Router: React.FC = () => {
     return (
@@ -30,7 +31,7 @@ const Router: React.FC = () => {
                         <Route index element={<DashboardUserProfilePage />} />
                         <Route path="courses" element={<DashboardCourseList />} />
                         <Route path="progress" element={<PurchasedCoursesPage />} />
-                        {/* <Route path="settings" element={<SettingsPage />} /> */}
+                        <Route path="settings" element={<DashboardSettingsPage />} />
                     </Route>
 
                     <Route path="*" element={
