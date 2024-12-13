@@ -5,7 +5,7 @@ type ValueCardProps = {
     values: string[];
 }
 
-const ValueCard: React.FC<ValueCardProps> = ({ title, values }) => (
+const ValueCard: React.FC<ValueCardProps> = ({ values }) => (
     <Paper
         elevation={3}
         sx={{

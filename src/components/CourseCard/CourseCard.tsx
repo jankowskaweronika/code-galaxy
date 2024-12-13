@@ -23,7 +23,6 @@ const CourseCard: React.FC<CourseCardProps> = ({
     description,
     purchased = false,
     progress,
-    topics,
     onPurchase
 }) => {
     const navigate = useNavigate();
