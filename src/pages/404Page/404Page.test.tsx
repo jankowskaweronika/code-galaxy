@@ -22,7 +22,6 @@ describe('NotFoundPage', () => {
             <NotFoundPage
                 title="404 Not Found"
                 message="Oops, the page you're looking for doesn't exist."
-                description="The page you requested could not be found. Please check the URL and try again."
                 buttonText="Go Back Home"
                 buttonLink="/"
             />
@@ -36,7 +35,6 @@ describe('NotFoundPage', () => {
             <NotFoundPage
                 title="404 Not Found"
                 message="Oops, the page you're looking for doesn't exist."
-                description="The page you requested could not be found. Please check the URL and try again."
                 buttonText="Go Back Home"
                 buttonLink="/"
             />
@@ -50,7 +48,6 @@ describe('NotFoundPage', () => {
             <NotFoundPage
                 title="404 Not Found"
                 message="Oops, the page you're looking for doesn't exist."
-                description="The page you requested could not be found. Please check the URL and try again."
                 buttonText="Go Back Home"
                 buttonLink="/"
             />
@@ -64,7 +61,6 @@ describe('NotFoundPage', () => {
             <NotFoundPage
                 title="404 Not Found"
                 message="Oops, the page you're looking for doesn't exist."
-                description="The page you requested could not be found. Please check the URL and try again."
                 buttonText="Go Back Home"
                 buttonLink="/"
             />
