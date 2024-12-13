@@ -1,5 +1,5 @@
 import { Box, styled } from '@mui/material';
-import Star from './star';
+import Star from './Star';
 
 const StyledStarField = styled(Box)({
     position: 'fixed',

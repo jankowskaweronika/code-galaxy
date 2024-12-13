@@ -21,7 +21,7 @@ const CourseCard: React.FC<CourseCardProps> = ({
     name,
     price,
     description,
-    purchased = false,
+    purchased,
     progress,
     onPurchase
 }) => {
