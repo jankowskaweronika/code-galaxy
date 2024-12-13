@@ -97,11 +97,6 @@ const CoursePage: React.FC = () => {
         }
     };
 
-    const handleReturn = () => {
-        if (isSaving) return;
-        navigate('/dashboard/progress');
-    };
-
     if (isLoading) {
         return (
             <DashboardUserLayout drawer={<DashboardNavigation />}>
@@ -130,8 +125,7 @@ const CoursePage: React.FC = () => {
                 <Button
                     variant="outlined"
                     startIcon={<ArrowBackIcon />}
-                    onClick={handleReturn}
-                    disabled={isSaving}
+                    onClick={() => navigate('/dashboard/progress')}
                     sx={{ mb: 3 }}
                 >
                     Wróć do postępów
@@ -174,12 +168,20 @@ const CoursePage: React.FC = () => {
                                 divider={index < course.topics.length - 1}
                                 sx={{ py: 2 }}
                                 secondaryAction={
-                                    <Checkbox
-                                        edge="end"
-                                        checked={completedTopics[topic.title] || false}
-                                        onChange={(e) => handleTopicCompletion(topic.title, e.target.checked)}
-                                        disabled={isSaving}
-                                    />
+                                    <Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
+                                        <Button
+                                            variant="contained"
+                                            size="small"
+                                            onClick={() => navigate(`/dashboard/course/${courseId}/lesson/${topic.order}`)}
+                                        >
+                                            Przejdź do lekcji
+                                        </Button>
+                                        <Checkbox
+                                            checked={completedTopics[topic.title] || false}
+                                            onChange={(e) => handleTopicCompletion(topic.title, e.target.checked)}
+                                            disabled={isSaving}
+                                        />
+                                    </Box>
                                 }
                             >
                                 <ListItemText

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import {
     Card,
     CardMedia,
@@ -9,13 +9,13 @@ import {
     Box,
     CircularProgress,
     Snackbar,
-    Alert
+    Alert,
 } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../auth/authContext';
 import { CourseCardProps } from '../../types/course';
 
-const CourseCard = ({
+const CourseCard: React.FC<CourseCardProps> = ({
     id,
     image,
     name,
@@ -23,36 +23,30 @@ const CourseCard = ({
     description,
     purchased = false,
     progress,
+    topics,
     onPurchase
-}: CourseCardProps) => {
+}) => {
     const navigate = useNavigate();
     const { user } = useAuth();
-    const [isProcessing, setIsProcessing] = React.useState(false);
-    const [showLoginAlert, setShowLoginAlert] = React.useState(false);
-    const [error, setError] = React.useState('');
+    const [isProcessing, setIsProcessing] = useState(false);
+    const [showLoginAlert, setShowLoginAlert] = useState(false);
 
-    const handleClick = async () => {
-        if (purchased) {
-            navigate(`/dashboard/course/${id}`);
-            return;
-        }
-
+    const handlePurchase = async () => {
         if (!user) {
             setShowLoginAlert(true);
             return;
         }
 
-        if (onPurchase) {
-            setIsProcessing(true);
-            try {
-                await onPurchase(id);
-                navigate('/dashboard/progress');
-            } catch (error) {
-                console.error('Błąd podczas zakupu kursu:', error);
-                setError('Nie udało się zakupić kursu. Spróbuj ponownie.');
-            } finally {
-                setIsProcessing(false);
-            }
+        if (!onPurchase) return;
+
+        setIsProcessing(true);
+        try {
+            await onPurchase(id);
+            navigate('/dashboard/progress');
+        } catch (error) {
+            console.error('Błąd podczas zakupu kursu:', error);
+        } finally {
+            setIsProcessing(false);
         }
     };
 
@@ -62,7 +56,7 @@ const CourseCard = ({
                 display: 'flex',
                 flexDirection: 'column',
                 height: '100%',
-                maxHeight: 500,
+                maxHeight: purchased ? 'none' : 500,
                 opacity: purchased ? 1 : 0.85,
                 transition: 'opacity 0.3s ease',
                 '&:hover': {
@@ -161,15 +155,25 @@ const CourseCard = ({
                 </CardContent>
 
                 <CardActions sx={{ padding: 2, pt: 0 }}>
-                    <Button
-                        variant="contained"
-                        fullWidth
-                        onClick={handleClick}
-                        disabled={isProcessing}
-                        startIcon={isProcessing ? <CircularProgress size={20} /> : null}
-                    >
-                        {isProcessing ? 'Przetwarzanie...' : (purchased ? 'Kontynuuj kurs' : 'Kup kurs')}
-                    </Button>
+                    {purchased ? (
+                        <Button
+                            variant="contained"
+                            fullWidth
+                            onClick={() => navigate(`/dashboard/course/${id}`)}
+                        >
+                            Kontynuuj kurs
+                        </Button>
+                    ) : (
+                        <Button
+                            variant="contained"
+                            fullWidth
+                            onClick={handlePurchase}
+                            disabled={isProcessing}
+                            startIcon={isProcessing ? <CircularProgress size={20} /> : null}
+                        >
+                            {isProcessing ? 'Przetwarzanie...' : 'Kup kurs'}
+                        </Button>
+                    )}
                 </CardActions>
             </Card>
 
@@ -192,20 +196,6 @@ const CourseCard = ({
                     }
                 >
                     Zaloguj się, aby kupić ten kurs
-                </Alert>
-            </Snackbar>
-
-            <Snackbar
-                open={!!error}
-                autoHideDuration={6000}
-                onClose={() => setError('')}
-                anchorOrigin={{ vertical: 'top', horizontal: 'center' }}
-            >
-                <Alert
-                    severity="error"
-                    onClose={() => setError('')}
-                >
-                    {error}
                 </Alert>
             </Snackbar>
         </>

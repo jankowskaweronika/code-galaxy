@@ -30,6 +30,7 @@ export type CourseCardProps = {
     description: string;
     purchased?: boolean | undefined;
     progress?: number | undefined;
+    topics: Topic[];
     onPurchase?: ((courseId: number) => Promise<void> | undefined) | undefined;
 }
 

@@ -15,6 +15,7 @@ import ContactPage from '../pages/ContactPage/ContactPage';
 import DashboardUserProfilePage from '../pages/DashboardUserProfilePage/DashboardUserProfilePage';
 import DashboardSettingsPage from '../pages/DashboardSettingsPage/DashboardSettingsPage';
 import CoursePage from '../pages/CoursePage/CoursePage';
+import LessonPage from '../pages/LessonPage/LessonPage';
 
 const Router: React.FC = () => {
     return (
@@ -34,6 +35,7 @@ const Router: React.FC = () => {
                         <Route path="progress" element={<PurchasedCoursesPage />} />
                         <Route path="settings" element={<DashboardSettingsPage />} />
                         <Route path="course/:courseId" element={<CoursePage />} />
+                        <Route path="course/:courseId/lesson/:lessonId" element={<LessonPage />} />
                     </Route>
 
                     <Route path="*" element={
